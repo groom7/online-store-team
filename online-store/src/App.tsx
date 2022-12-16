@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Products from './components/Main/Products/Products';
 import { getAllProducts } from './controllers/getAllProducts';
 import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
+import Main from './pages/Main/Main';
 function App() {
   const [loading, setLoading] = useState(true)
   const setProduct = () => {
@@ -13,7 +13,7 @@ function App() {
       });
     }).then(() => {
       getAllProducts().length === 0 ? setProduct() : setLoading(false)
-    }).catch((err) => {
+    }).catch((err) =>   {
       if(err) {
         return err
       }
@@ -24,7 +24,7 @@ function App() {
   }, []);
   return (
     <div className="App">
-      {loading ? <div>Loading please wait...</div> : (<Products />)}
+      {loading ? <div>Loading please wait...</div> : (<Main />)}
     </div>
   )
 }

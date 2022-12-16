@@ -36,5 +36,23 @@ export const store:Store = {
         if (index !== -1) {
             this.state.busket.splice(index, 1)
         }
-    }
+    },
+    getAllCattegories() {
+        let cattegories: string[] = []
+        this.state.products.forEach((item) => {
+            if(!cattegories.includes(item.category)){
+                cattegories.push(item.category)
+            }
+        })
+        return cattegories
+    },
+    getAllBrands() {
+        let brands: string[] = []
+        this.state.products.forEach((item) => {
+            if(!brands.includes(item.brand)){
+                brands.push(item.brand)
+            }
+        })
+        return brands
+    },
 }

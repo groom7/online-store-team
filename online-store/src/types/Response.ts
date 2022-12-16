@@ -22,5 +22,7 @@ export interface Store {
     addToBusket(product: Response): void,
     getAllBusketItems(): Response[],
     busketIsEmpty(): boolean,
-    removeFromBusket(id: Response): void
+    removeFromBusket(id: Response): void,
+    getAllCattegories(): string[],
+    getAllBrands(): string[]
 }
