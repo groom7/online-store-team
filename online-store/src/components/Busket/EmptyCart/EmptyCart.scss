@@ -1,0 +1,18 @@
+.empty-cart {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 5px;
+  margin: 0 auto;
+}
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  background: no-repeat center/contain url(../../../assets/images/shopping-cart.png);
+  opacity: 0.8;
+}
+
+.empty-cart-title {
+  font-size: 24px;
+}

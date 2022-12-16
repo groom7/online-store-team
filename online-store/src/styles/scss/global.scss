@@ -1,0 +1,14 @@
+@use 'fonts';
+
+html {
+  font-family: 'Open Sans','Sans-serif';
+  font-weight: 400px;
+  color: #414141;
+}
+
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
