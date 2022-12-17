@@ -9,7 +9,14 @@ export const store:Store = {
 
         ],
         filters: {
+            category: [
 
+            ],
+            brands: [
+
+            ],
+            price: null,
+            stock: null
         }
     },
     setProducts(array) {
@@ -54,5 +61,29 @@ export const store:Store = {
             }
         })
         return brands
+    },
+    addFilters(filter, payload) {
+        let filters = this.state.filters
+        if(filter in filters) {
+            console.log(filter, payload)
+             if(typeof payload === 'string'){
+                if(filters[filter].includes(payload)) {
+                    let index = filters[filter].indexOf(payload)
+                    filters[filter].splice(index, 1)
+                }else {
+                    filters[filter].push(payload)
+                }
+             }
+             if(typeof payload === 'number') {
+                filters[filter] = payload
+             }
+        }
+        console.log(this.state.filters)
+    },
+    resetFilters() {
+        this.state.filters.category = []
+        this.state.filters.brands = []
+        this.state.filters.stock = null
+        this.state.filters.price = null
     },
 }

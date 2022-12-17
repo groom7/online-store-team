@@ -1,0 +1,16 @@
+.main__wrapper {
+    display: flex;
+}
+.block__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.block__img {
+    max-width: 90px;
+}
+.block__wrapper {
+    border: 2px solid black;
+}
+.filters__categories, .filters__brand {
+    border: 2px solid black;
+}

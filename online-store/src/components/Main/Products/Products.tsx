@@ -4,9 +4,10 @@ import { busketIsEmpty } from '../../../controllers/busketIsEmpty';
 import { getAllBusketItems } from '../../../controllers/getAllBusketItems';
 import { getAllProducts } from '../../../controllers/getAllProducts';
 import { removeFromBusket } from '../../../controllers/removeFromBusket';
-import { Response } from '../../../types/Response';
-import '../../../styles/css/Products.css'
-function Products() {
+import { IPropsMainPage, Response } from '../../../types/Response';
+
+function Products(props: IPropsMainPage) {
+  const {category = [], brands = [], handleCheckBox} = props
   const handleAddToBusket = (item: Response) => {
     addToBusket(item);
   };
@@ -19,11 +20,21 @@ function Products() {
   const hadleDelete = (item: Response) => {
     removeFromBusket(item)
   }
+  const filterMainPage = (array: Response[]) => {
+    let res = array
+    if(brands.length !== 0) {
+      res = res.filter((item) => brands.includes(item.brand))
+    }
+    if(category.length !== 0) {
+      res = res.filter((item) => category.includes(item.category))
+    }
+    return res
+  }
   return (
    <>
     <div className='block__container'>
-      {getAllProducts().length === 0 ? <div>empty</div> : getAllProducts().map((item) => (
-        <div className="block__wrapper">
+      {getAllProducts().length === 0 ? <div>empty</div> : filterMainPage(getAllProducts()).map((item, i) => (
+        <div className="block__wrapper" key={i + 2}>
           <div>{item.title}</div>
           <div className='describtion'>
             <div>{item.category}</div>
