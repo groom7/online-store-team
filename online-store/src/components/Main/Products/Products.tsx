@@ -19,6 +19,7 @@ function Products() {
   const hadleDelete = (item: Response) => {
     removeFromBusket(item)
   }
+  // console.log(getAllProducts()[0])
   return (
    <>
     <div>
