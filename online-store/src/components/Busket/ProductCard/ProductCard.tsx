@@ -24,7 +24,7 @@ function ProductCard(props: {productData: Response}) {
           <button className='increase-button'></button>
         </li>
       </ul>
-      <span className='price'>{props.productData.price}$</span>
+      <p><span className='price'>{props.productData.price}$</span></p>
     </div>
   )
 }
