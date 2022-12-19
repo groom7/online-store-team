@@ -8,7 +8,7 @@ function ProductCard(props: {productData: Response}) {
     <div className='product-card'>
       <div className='list-number'></div>
       <img src={props.productData.thumbnail} className='product-image' alt={props.productData.title} />
-      <ul product-card__info>
+      <ul className='product-card__info'>
         <li className='product-title'>{props.productData.brand} {props.productData.title}</li>
         <li className='product-description'>{props.productData.description}</li>
         <li className='product-rating'>Rating: {props.productData.rating}</li>

@@ -12,6 +12,13 @@
     height: 100px;
     object-fit: cover;
   }
+  .product-card__info{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
   .product-title {
     font-weight: 600;
   }
