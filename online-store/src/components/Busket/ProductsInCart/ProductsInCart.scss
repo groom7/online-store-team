@@ -1,0 +1,22 @@
+.products-list {
+  max-width: 800px;
+  padding: 20px;
+  .products-list__header {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ebebeb;
+  }
+  .cart-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .cart-title {
+    display: flex;
+    color: black;
+  }
+}

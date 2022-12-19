@@ -6,6 +6,8 @@
   margin: 0 0 20px;
   border-bottom: 1px solid #ebebeb;
   .list-number {
+    min-width: 25px;
+    text-align: center;
   }
   .product-image {
     width: 100px;
@@ -20,6 +22,7 @@
     justify-content: flex-start;
   }
   .product-title {
+    font-size: 18px;
     font-weight: 600;
   }
   .product-description {
@@ -44,11 +47,10 @@
   }
   .decrease-button,
   .increase-button {
-    position: relative;
     width: 18px;
     height: 18px;
-    background-color: transparent;
     cursor: pointer;
+    transition: ease all 0.3s;
   }
   .decrease-button {
     background: no-repeat center/contain url(../../../assets/images/decrease.png);
@@ -63,6 +65,8 @@
     background: no-repeat center/contain url(../../../assets/images/increase.png);
   }
   .price {
+    min-width: 100px;
+    text-align: center;
     font-size: 18px;
     font-weight: 600;
     color: #ff7004;

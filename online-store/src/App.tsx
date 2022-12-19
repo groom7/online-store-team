@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import EmptyCart from './components/Busket/EmptyCart/EmptyCart';
 import ProductCard from './components/Busket/ProductCard/ProductCard';
+import ProductsInCart from './components/Busket/ProductsInCart/ProductsInCart';
 import Products from './components/Main/Products/Products';
 import { getAllProducts } from './controllers/getAllProducts';
 import { setProducts } from './controllers/setProducts';
@@ -44,7 +45,8 @@ function App() {
     //   {loading ? <div>Loading please wait...</div> : (<Products />)}
     // </div>
   // (<EmptyCart />)
-  <ProductCard productData={ productObj } />
+  // <ProductCard productData={ productObj } />
+  <ProductsInCart productData={ productObj } />
   )
   
 }
