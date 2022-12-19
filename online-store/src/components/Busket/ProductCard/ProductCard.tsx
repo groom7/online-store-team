@@ -15,22 +15,13 @@ function ProductCard(props: {productData: Response}) {
         <li className='product-discount'>Discount: {props.productData.discountPercentage}%</li>
       </ul>
       <ul className='quantity'>
-        <li className='in-stock'>In stock: {props.productData.stock}</li>
+        <li className='in-stock'>Available: {props.productData.stock} pcs</li>
         <li className='quantity-control'>
           <button className='decrease-button'>
-            {/* <svg 
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"><path d="M0 10h24v4h-24z"/>
-            </svg> */}
             <div className='minus-line'></div>
           </button>
           <span className='quantity-value'>XXX</span>
-          <button className='increase-button'>
-            <div className='plus-horizontal-line'></div>
-            <div className='plus-vertical-line'></div>
-          </button>
+          <button className='increase-button'></button>
         </li>
       </ul>
       <span className='price'>{props.productData.price}$</span>
