@@ -47,7 +47,7 @@ export interface Store {
   getAllProducts(): Response[];
   getAllClearProducts() : Response[]
   addToBusket(product: Response): void;
-  getAllBusketItems(): CartProductsData,;
+  getAllBusketItems(): CartProductsData,
   busketIsEmpty(): boolean;
   removeFromBusket(productData: Response): void,
   getAllCattegories(): string[];

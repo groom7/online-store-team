@@ -10,7 +10,6 @@ import { store } from './store/store';
 import { Response, Store } from './types/Response';
 import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
-import Busket from './pages/Busket/Busket';
 export interface StoreContext {
   storeState: Store;
   setCartProduct: (productData: Response) => void
