@@ -1,0 +1,28 @@
+.main__wrapper {
+    display: flex;
+}
+.block__container {
+   
+}
+.block__img {
+    max-width: 90px;
+}
+.block__wrapper {
+    border: 2px solid black;
+}
+.filters__categories, .filters__brand {
+    border: 2px solid black;
+}
+.small {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+.big {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.filter__container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
