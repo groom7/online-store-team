@@ -44,7 +44,6 @@ function Main() {
   const [busket, setBusket] = useState<Response[]>([]);
   const [displayProduct, setDisplayProduct] = useState(false);
   const handleCheckBox = (type: string, payload: string | number) => {
-   
     if (type === 'select' && typeof payload === 'string') {
       setSelect(payload);
       addSelectOption(payload);
@@ -52,8 +51,8 @@ function Main() {
     if (type === 'reset') {
       setInputPrice(1);
       setInputStock(2);
-      setInputStockSecond(2);
-      setInputPriceSecond(1);
+      setInputStockSecond(150);
+      setInputPriceSecond(1749);
       setBrands([]);
       setCategory([]);
       setSearch('');
@@ -97,7 +96,6 @@ function Main() {
     if (type === 'stock' && typeof payload === 'number') {
       setInputStock(payload);
     }
-  
     if (type === 'display') {
       if (payload === 'small') {
         changeDisplayStyle('small');

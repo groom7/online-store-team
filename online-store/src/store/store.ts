@@ -176,7 +176,7 @@ export const store: Store = {
       const cartTotalCards = 
         Object.keys(this.state.busket.cartProductsData).length;
       this.state.busket.cartTotalCards = cartTotalCards;
-    }
+    },
   getAllCattegories() {
     let cattegories: string[] = [];
     this.state.products.forEach((item) => {
