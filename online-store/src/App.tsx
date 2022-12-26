@@ -8,7 +8,9 @@ import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
 import { store } from './store/store';
 import { Response, Store } from './types/Response';
-
+import Main from './pages/Main/Main';
+import { Route, Routes } from 'react-router-dom';
+import Busket from './pages/Busket/Busket';
 export interface StoreContext {
   storeState: Store;
   setCartProduct: (productData: Response) => void
@@ -20,6 +22,7 @@ export const StoreStateContext = createContext<StoreContext>({
   setCartProduct: () => {},
   removeCartProduct: () => {},
 });
+
 
 function App() {
   const [storeState, setStore] = useState(store);
@@ -55,14 +58,13 @@ function App() {
     setProduct()
   }, []);
   return (
-    <div className="App">
-      <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct }}>
-        <Busket />
-        {loading ? <div>Loading please wait...</div> : (<Products />)}
-      </StoreStateContext.Provider>
-    </div>
+    <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct }}>
+      <Routes>
+        <Route path='/' element={<Main />}/>
+        <Route path='/busket' element={<Busket />} />
+      </Routes>
+    </StoreStateContext.Provider>
   )
-  
 }
 
 export default App;
