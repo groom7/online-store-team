@@ -11,11 +11,23 @@ export interface Response {
   thumbnail: string;
   title: string;
 }
-
+export interface CartProductsData {
+  [key: number]: {
+    identicalProducts: Response[],
+    groupTotalPrice: number,
+    groupTotalCount: number,
+  },
+}
+export interface BusketState {
+  cartProductsData: CartProductsData,
+  cartTotalCount: number,
+  cartTotalPrice: number,
+  cartTotalCards: number,
+}
 export interface Store {
   state: {
     products: Response[];
-    busket: Response[];
+    busket: BusketState,
     filters: {
       category: [] | string[];
       brands: [] | string[];
@@ -35,14 +47,17 @@ export interface Store {
   getAllProducts(): Response[];
   getAllClearProducts() : Response[]
   addToBusket(product: Response): void;
-  getAllBusketItems(): Response[];
+  getAllBusketItems(): CartProductsData,;
   busketIsEmpty(): boolean;
-  removeFromBusket(id: Response): void;
+  removeFromBusket(productData: Response): void,
   getAllCattegories(): string[];
   addSelectOption(option: string) : void
   getAllBrands(): string[];
   addFilters(filter: string, payload: string | number): void;
   resetFilters(): void
+  getTotalPrice(arr: Response[]): number,
+  recalculateCartTotals(): void,
+  recalculateCartTotalCards(): void,
 }
 export interface IPropsProduct {
   displayProduct: boolean

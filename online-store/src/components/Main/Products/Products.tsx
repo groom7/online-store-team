@@ -5,14 +5,13 @@ import { getAllProducts } from '../../../controllers/getAllProducts';
 import { IPropsProduct } from '../../../types/Response';
 
 const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSearch,search,inputPrice, category, brands, handleCheckBox}: IPropsProduct) => {
- 
+
   const handleClick = () => {
     console.log(getAllBusketItems())
   }
   const tempHandleClick = () => {
     console.log(busketIsEmpty())
   }
-  
  
   return (
    <div className='product__wrapper'>
@@ -57,7 +56,6 @@ const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSea
           <button onClick={() => {hadleDelete(item)}}>Remove this</button>
         </div>
       ))}
-     
     </div>
     <button onClick={() => {handleClick()}}>se all prodducts in busket</button>
     <button onClick={() => {tempHandleClick()}}>Is empty</button>

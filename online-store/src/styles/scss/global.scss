@@ -1,0 +1,23 @@
+@use 'fonts';
+
+html {
+  font-family: 'Open Sans','Sans-serif';
+  font-weight: 400px;
+  color: #414141;
+}
+
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+.hoverOpacity:hover {
+  opacity: 0.6;
+}
+
+.hoverOrange:hover {
+  filter: invert(40%) sepia(90%) saturate(1000%);
+}
