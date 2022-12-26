@@ -1,29 +1,43 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import EmptyCart from './components/Busket/EmptyCart/EmptyCart';
-import ProductCard from './components/Busket/ProductCard/ProductCard';
-import ProductsInCart from './components/Busket/ProductsInCart/ProductsInCart';
+import { useEffect, useState, createContext } from 'react';
 import Products from './components/Main/Products/Products';
+import { addToBusket } from './controllers/addToBusket';
 import { getAllProducts } from './controllers/getAllProducts';
+import { removeFromBusket } from './controllers/removeFromBusket';
 import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
+import { store } from './store/store';
+import { Response, Store } from './types/Response';
 
-const productObj = {
-  id:1,
-  title: "iPhone 9",
-  description: "An apple mobile which is nothing like apple",
-  price: 549,
-  discountPercentage: 12.96,
-  rating: 4.69,
-  stock: 94,
-  brand: "Apple",
-  category: "smartphones",
-  thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-  images: ["https://i.dummyjson.com/data/products/1/1.jpg","https://i.dummyjson.com/data/products/1/2.jpg","https://i.dummyjson.com/data/products/1/3.jpg","https://i.dummyjson.com/data/products/1/4.jpg","https://i.dummyjson.com/data/products/1/thumbnail.jpg"]
+export interface StoreContext {
+  storeState: Store;
+  setCartProduct: (productData: Response) => void
+  removeCartProduct: (productData: Response) => void
 }
 
+export const StoreStateContext = createContext<StoreContext>({
+  storeState: store,
+  setCartProduct: () => {},
+  removeCartProduct: () => {},
+});
+
 function App() {
-  const [loading, setLoading] = useState(true)
+  const [storeState, setStore] = useState(store);
+  const setCartProduct = (productData: Response) => {
+    addToBusket(productData);
+    setStore({
+      ...store,
+    });
+  };
+  const removeCartProduct = (productData: Response) => {
+    removeFromBusket(productData);
+    setStore({
+      ...store,
+    });
+  };
+  
+  const [loading, setLoading] = useState(true);
+  
   const setProduct = () => {
     fetch('https://dummyjson.com/products?limit=100').then((data) => {
       data.json().then((product) => {
@@ -41,12 +55,12 @@ function App() {
     setProduct()
   }, []);
   return (
-    // <div className="App">
-    //   {loading ? <div>Loading please wait...</div> : (<Products />)}
-    // </div>
-  // (<EmptyCart />)
-  // <ProductCard productData={ productObj } />
-  <ProductsInCart productData={ productObj } />
+    <div className="App">
+      <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct }}>
+        <Busket />
+        {loading ? <div>Loading please wait...</div> : (<Products />)}
+      </StoreStateContext.Provider>
+    </div>
   )
   
 }

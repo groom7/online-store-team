@@ -1,7 +1,7 @@
 .empty-cart {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: 5px;
   margin: 10px auto;
 }
@@ -13,5 +13,6 @@
 }
 
 .empty-cart-title {
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 600;
 }

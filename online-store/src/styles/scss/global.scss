@@ -17,3 +17,7 @@ html {
 .hoverOpacity:hover {
   opacity: 0.6;
 }
+
+.hoverOrange:hover {
+  filter: invert(40%) sepia(90%) saturate(1000%);
+}

@@ -11,25 +11,32 @@ export interface Response{
   thumbnail: string,
   title: string
 }
+export interface CartProductsData {
+  [key: number]: {
+    identicalProducts: Response[],
+    groupTotalPrice: number,
+    groupTotalCount: number,
+  },
+}
+export interface BusketState {
+  cartProductsData: CartProductsData,
+  cartTotalCount: number,
+  cartTotalPrice: number,
+  cartTotalCards: number,
+}
 export interface Store {
   state: {
       products: Response[],
-      busket: {
-        items: {
-          [key: number]: {
-            items: Response[],
-            totalPrice: number,
-          },
-        },
-        totalCount: number,
-        totalPrice: number,
-      },
+      busket: BusketState,
       filters: {}
   },
   setProducts(array: Response[]): void,
   getAllProducts(): Response[],
   addToBusket(product: Response): void,
-  getAllBusketItems(): Response[],
+  getAllBusketItems(): CartProductsData,
   busketIsEmpty(): boolean,
-  removeFromBusket(id: Response): void
+  removeFromBusket(productData: Response): void,
+  getTotalPrice(arr: Response[]): number,
+  recalculateCartTotals(): void,
+  recalculateCartTotalCards(): void,
 }
