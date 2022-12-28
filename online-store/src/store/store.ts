@@ -2,14 +2,25 @@ import { CartProductsData, Response, Store } from "../types/Response"
 export const store: Store = {
   state: {
     products: [],
-    busket: {
-       cartProductsData: {
+    busket: 
+      JSON.parse(localStorage.getItem('busketState') || '{}') || 
+      {
+        cartProductsData: {
 
+        },
+        promo: {
+          percentageDiscounts: {
+            'NEWYEAR10': 10,
+            'LUCKY10':  10,
+          },
+          userPromoCodes: [],
+        },
+        cartTotalCount: 0,
+        cartTotalPrice: 0,
+        cartTotalCards: 0,
+        totalDiscounAmount: 0,
+        cartGrandTotal: 0
       },
-      cartTotalCount: 0,
-      cartTotalPrice: 0,
-      cartTotalCards: 0,
-    },
     filters: {
       category: [],
       brands: [],
@@ -127,6 +138,9 @@ export const store: Store = {
         JSON.parse(JSON.stringify(newCartProductsData));
       this.recalculateCartTotals();
       this.recalculateCartTotalCards();
+      this.recalculateTotalDiscountAmount();
+      this.recalculateGrandTotal();
+      this.setBusketStateToLocalStorage();
   },
     getAllBusketItems() {
         return this.state.busket.cartProductsData;
@@ -157,6 +171,9 @@ export const store: Store = {
         }
         this.recalculateCartTotals();
         this.recalculateCartTotalCards();
+        this.recalculateTotalDiscountAmount();
+        this.recalculateGrandTotal();
+        this.setBusketStateToLocalStorage()
       }
     },
     getTotalPrice(arr: Response[]) {
@@ -177,7 +194,41 @@ export const store: Store = {
         Object.keys(this.state.busket.cartProductsData).length;
       this.state.busket.cartTotalCards = cartTotalCards;
     },
-  getAllCattegories() {
+    promoCodeIsValid(code: string) {
+      return code in this.state.busket.promo.percentageDiscounts;
+    },
+    addUserPromoCode(code: string) {
+      if (this.promoCodeIsValid(code) 
+            && !this.state.busket.promo.userPromoCodes.includes(code)) {
+              this.state.busket.promo.userPromoCodes.push(code);
+              this.recalculateTotalDiscountAmount();
+              this.recalculateGrandTotal();
+              this.setBusketStateToLocalStorage();
+      }
+    },
+    removeUserPromoCode(code: string) {
+      this.state.busket.promo.userPromoCodes =
+        this.state.busket.promo.userPromoCodes.filter(item => item !== code);
+      this.recalculateTotalDiscountAmount();
+      this.recalculateGrandTotal();
+      this.setBusketStateToLocalStorage();
+    },
+    recalculateTotalDiscountAmount() {
+      let totalDiscounAmount = 0;
+      this.state.busket.promo.userPromoCodes.forEach(item => {
+        totalDiscounAmount += 
+          this.state.busket.cartTotalPrice * (this.state.busket.promo.percentageDiscounts[item] / 100);
+      })
+      this.state.busket.totalDiscounAmount = totalDiscounAmount;
+    },
+    recalculateGrandTotal() {
+      this.state.busket.cartGrandTotal = 
+        this.state.busket.cartTotalPrice - this.state.busket.totalDiscounAmount;
+    },
+    setBusketStateToLocalStorage() {
+      localStorage.setItem('busketState', JSON.stringify(this.state.busket));
+    },
+    getAllCattegories() {
     let cattegories: string[] = [];
     this.state.products.forEach((item) => {
       if (!cattegories.includes(item.category)) {

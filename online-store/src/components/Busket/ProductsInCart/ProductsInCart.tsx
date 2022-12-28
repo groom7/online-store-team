@@ -1,27 +1,58 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState, ChangeEvent, useEffect } from 'react';
+import { useSearchParams } from "react-router-dom";
 import './ProductsInCart.scss';
 import ProductCard from '../ProductCard/ProductCard';
 import cartIcon from '../../../assets/images/shopping-cart.png';
-import xIcon from '../../../assets/images/x.png';
 import { StoreStateContext } from '../../../App';
 import { createPagesNumbers } from './createPagesNumbers';
 
 function ProductsInCart() {
   const { storeState } = useContext(StoreStateContext);
+  const [searchParams, setSearchParams] = useSearchParams();
   const defaultStates = {
-    currentPage: 1,
-    productsPerPageState: 1
+    currentPage: 
+      Number(searchParams.get('currentPage')) 
+      || +JSON.parse(localStorage.getItem('currentPage') || '1'),
+    productsPerPageState: 
+      Number(searchParams.get('productsPerPage'))
+      || +JSON.parse(localStorage.getItem('perPageCount') || '3')
   };
+  useEffect(() => {
+    searchParams.set('productsPerPage', String(defaultStates.productsPerPageState));
+    searchParams.set('currentPage', String(defaultStates.currentPage));
+    setSearchParams(searchParams);
+  }, []);
   const [currentPageState, setCurrentPageState] = useState(defaultStates.currentPage);
   const [productsPerPageState, setProductsPerPageState] = useState(defaultStates.productsPerPageState);
   const productsPagesCount = Math.ceil(storeState.state.busket.cartTotalCards / productsPerPageState);
   const pagesNumbers = createPagesNumbers(productsPagesCount, currentPageState);
+  const handlePerPageValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') {
+      setProductsPerPageState(defaultStates.productsPerPageState);
+    } else {
+      setProductsPerPageState(+event.target.value)
+    }
+    localStorage.setItem('perPageCount', event.target.value);
+    searchParams.set('productsPerPage', event.target.value)
+    setSearchParams(searchParams);
+  }
+  const handleCurrenPageCLick = (pageNumber: number) => {
+    setCurrentPageState(pageNumber);
+    localStorage.setItem('currentPage', String(pageNumber));
+    searchParams.set('currentPage', String(pageNumber))
+    setSearchParams(searchParams);
+  };
   const productsOnPage = Object.values(storeState.state.busket.cartProductsData)
     .slice(
       (currentPageState - 1) * productsPerPageState,
       (currentPageState - 1) * productsPerPageState + productsPerPageState
     );
-  if (productsOnPage.length === 0 ) setCurrentPageState(currentPageState - 1);
+  if (productsOnPage.length === 0 ) {
+    setCurrentPageState(currentPageState - 1);
+    searchParams.set('currentPage', String(currentPageState - 1))
+    setSearchParams(searchParams);
+    localStorage.setItem('currentPage', String(currentPageState - 1));
+  }
   
   return (
     <div className='products-list'>
@@ -41,7 +72,7 @@ function ProductsInCart() {
                   : 'page-number'
                 } 
                 key={ window.crypto.randomUUID() }
-                onClick={ () => setCurrentPageState(pageNumber) }
+                onClick={ () => handleCurrenPageCLick(pageNumber) }
               >
                 { pageNumber }
               </span> 
@@ -53,19 +84,20 @@ function ProductsInCart() {
               className='items-per-page__input'
               type="number"
               defaultValue={ defaultStates.productsPerPageState }
-              onChange={ (event) => setProductsPerPageState(+event.target.value) }
+              onChange={ (event) => handlePerPageValueChange(event) }
               placeholder='count'
             />
           </div>
         </div>
       </div>
       <div className='products-list__cards'>
-      { productsOnPage.map(item => 
+      { productsOnPage.map((item, index) => 
           <ProductCard
             productData={ item.identicalProducts[0] }
             groupTotalPrice={ item.groupTotalPrice }
             groupTotalCount={ item.groupTotalCount }
-            key={ item.title }
+            listNumber={(currentPageState - 1) * productsPerPageState + index + 1}
+            key={ window.crypto.randomUUID() }
           />
         )
       }

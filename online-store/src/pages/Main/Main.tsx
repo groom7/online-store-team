@@ -125,7 +125,7 @@ function Main() {
   };
   return (
     <div className="main">
-      <Header busket={busket} />
+      <Header />
       <div className="main__wrapper">
         <Filters
           inputPriceSecond={inputPriceSecond}

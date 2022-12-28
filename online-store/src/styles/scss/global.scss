@@ -21,3 +21,8 @@ html {
 .hoverOrange:hover {
   filter: invert(40%) sepia(90%) saturate(1000%);
 }
+
+button {
+  cursor: pointer;
+  transition: ease all 0.3s;
+}
