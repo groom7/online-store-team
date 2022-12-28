@@ -8,6 +8,7 @@ function ProductCard(
     productData: Response,
     groupTotalPrice: number,
     groupTotalCount: number 
+    listNumber: number,
   } ) {
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const handleProductIncrease = () => {
@@ -19,12 +20,14 @@ function ProductCard(
   }
   return (
     <div className='product-card'>
-      <div className='list-number'>1</div>
-      <img
-        src={props.productData.thumbnail}
-        className='product-image'
-        alt={props.productData.title}
-      />
+      <div className='list-number'>{props.listNumber}</div>
+      <figure className='product-image-wrapper'>
+        <img
+          src={props.productData.thumbnail}
+          className='product-image'
+          alt={props.productData.title}
+        />
+      </figure>
       <ul className='product-card__info'>
         <li className='product-title'>{props.productData.brand} {props.productData.title}</li>
         <li className='product-description'>{props.productData.description}</li>
@@ -35,12 +38,12 @@ function ProductCard(
         <li className='in-stock'>Available: { props.productData.stock } pcs</li>
         <li className='quantity-control'>
           <button
-            className='decrease-button hoverOrange'
+            className='decrease-button button hoverOrange'
             onClick={ () => removeCartProduct(props.productData) }>
           </button>
           <span className='quantity-value'>{ props.groupTotalCount }</span>
           <button 
-            className='increase-button hoverOrange'
+            className='increase-button button hoverOrange'
             onClick={ handleProductIncrease }
           >
           </button>
