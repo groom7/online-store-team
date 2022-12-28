@@ -10,12 +10,14 @@ import { Response, StoreContext } from './types/Response';
 import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
 import { removeUserPromoCode } from './controllers/removeUserPromoCode';
+import { addUserPromoCode } from './controllers/addUserPromoCode';
 
 export const StoreStateContext = createContext<StoreContext>({
   storeState: store,
   setCartProduct: () => {},
   removeCartProduct: () => {},
   updateUserPromoCodes: (code) => {},
+  applyUserPromoCode: (code) => {},
 })
 
 function App() {
@@ -38,6 +40,12 @@ function App() {
       ...store,
     });
   };
+  const applyUserPromoCode = (code: string) => {
+    addUserPromoCode(code);
+    setStore({
+      ...store,
+    });
+  }
   
   const [loading, setLoading] = useState(true);
   
@@ -58,7 +66,7 @@ function App() {
     setProduct()
   }, []);
   return (
-    <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct, updateUserPromoCodes }}>
+    <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct, updateUserPromoCodes, applyUserPromoCode }}>
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/busket' element={<Busket />} />

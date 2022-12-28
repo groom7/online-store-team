@@ -1,26 +1,28 @@
 import { useContext } from 'react'
-import '../../styles/scss/HeaderPage/header.scss'
 import { Link } from 'react-router-dom'
 import { StoreStateContext } from '../../App';
 import './Header.scss'
+import cartIcon from '../../assets/images/shopping-cart.png'
 
 function Header() {
   const { storeState } = useContext(StoreStateContext);
   
   return (
-    <div className='header__wrapper'>
-      <Link to='/' className='logo'>Online store</Link>
-      <div className='card__total'>Card total: { storeState.state.busket.cartGrandTotal }</div>
-
-      <Link to='/busket' className='header__busket'>
-        <img className='header__busket-img' src="https://online-store-rs.netlify.app/assets/cart.png" alt="" />
-        <div className='header__busket-count'>
-          { storeState.state.busket.cartTotalCount }
-        </div>
-
-      </Link>
-    </div>
+    <header className='header'>
+      <div className='outer-wrapper'>
+        <div className="header-container">
+          <Link to='/' className='header__logo'>Online store</Link>
+          <Link to='/busket' className='header__cart button'>
+            <div className='cart-totals'>
+              <span className='count'>{ storeState.state.busket.cartTotalCount } pcs</span>
+              <span className='grand-total'>${ storeState.state.busket.cartGrandTotal }</span>
+            </div>
+            <img src={ cartIcon } className='cart-icon hoverOrange' alt="cart-icon" />
+          </Link>
+          </div>
+      </div>
+    </header>
   )
 }
 
-export default Header
+export default Header;

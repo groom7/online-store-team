@@ -75,10 +75,11 @@ export interface Store {
   setBusketStateToLocalStorage(): void,
 }
 export interface StoreContext {
-  storeState: Store;
-  setCartProduct: (productData: Response) => void
-  removeCartProduct: (productData: Response) => void
-  updateUserPromoCodes: (code: string) => void
+  storeState: Store,
+  setCartProduct: (productData: Response) => void,
+  removeCartProduct: (productData: Response) => void,
+  updateUserPromoCodes: (code: string) => void,
+  applyUserPromoCode: (code: string) => void,
 }
 export interface IPropsProduct {
   displayProduct: boolean
