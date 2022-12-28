@@ -1,11 +1,10 @@
 import { useContext, useState, ChangeEvent } from 'react'
 import { StoreStateContext } from '../../../App';
 import { promoCodeIsValid } from '../../../controllers/promoCodeIsValid';
-import { addUserPromoCode } from '../../../controllers/addUserPromoCode';
 import './Summary.scss';
 
 function Summary() {
-  const { storeState, updateUserPromoCodes } = useContext(StoreStateContext);
+  const { storeState, updateUserPromoCodes, applyUserPromoCode } = useContext(StoreStateContext);
   const totalDiscounAmount = storeState.state.busket.totalDiscounAmount;
   const [promoCode, setPromoCode] = useState('');
   const [promoCodeDirty, setPromoCodeDirty] = useState(false);
@@ -21,7 +20,7 @@ function Summary() {
     } else if (!promoCodeIsValid(promoCodeString)) {
       setPromoCodeError('Promo code does not exist');
     } else {
-      addUserPromoCode(promoCodeString);
+      applyUserPromoCode(promoCodeString);
       setPromoCodeError('');
       setPromoCode('');
       setPromoCodeDirty(false);
