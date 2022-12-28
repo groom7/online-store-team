@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import '../../styles/scss/HeaderPage/header.scss'
-import { HeaderProps } from '../../types/Response'
 import { Link } from 'react-router-dom'
 import { StoreStateContext } from '../../App';
+import './Header.scss'
 
 function Header() {
   const { storeState } = useContext(StoreStateContext);
   
   return (
     <div className='header__wrapper'>
-      <Link to='/' className='logo'>🛍 Online store</Link>
+      <Link to='/' className='logo'>Online store</Link>
       <div className='card__total'>Card total: { storeState.state.busket.cartGrandTotal }</div>
 
       <Link to='/busket' className='header__busket'>
