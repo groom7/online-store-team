@@ -228,6 +228,16 @@ export const store: Store = {
     setBusketStateToLocalStorage() {
       localStorage.setItem('busketState', JSON.stringify(this.state.busket));
     },
+    clearCart() {
+      this.state.busket.cartProductsData = 
+        JSON.parse(JSON.stringify({}));
+      this.state.busket.promo.userPromoCodes = [].slice(0);
+      this.state.busket.cartTotalCount = 0;
+      this.state.busket.cartTotalPrice = 0;
+      this.state.busket.cartTotalCards = 0;
+      this.state.busket.totalDiscounAmount = 0;
+      this.state.busket.cartGrandTotal = 0;
+    },
     getAllCattegories() {
     let cattegories: string[] = [];
     this.state.products.forEach((item) => {

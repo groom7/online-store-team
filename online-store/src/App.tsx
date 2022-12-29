@@ -45,7 +45,7 @@ function App() {
     setStore({
       ...store,
     });
-  }
+  };
   
   const [loading, setLoading] = useState(true);
   
@@ -66,7 +66,14 @@ function App() {
     setProduct()
   }, []);
   return (
-    <StoreStateContext.Provider value={{ storeState, setCartProduct, removeCartProduct, updateUserPromoCodes, applyUserPromoCode }}>
+    <StoreStateContext.Provider
+      value={{
+        storeState,
+        setCartProduct,
+        removeCartProduct,
+        updateUserPromoCodes,
+        applyUserPromoCode,
+      }}>
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/busket' element={<Busket />} />
