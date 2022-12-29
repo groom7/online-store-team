@@ -3,6 +3,7 @@ import { busketIsEmpty } from '../../../controllers/busketIsEmpty';
 import { getAllBusketItems } from '../../../controllers/getAllBusketItems';
 import { getAllProducts } from '../../../controllers/getAllProducts';
 import { IPropsProduct } from '../../../types/Response';
+import { Link } from 'react-router-dom';
 
 const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSearch,search,inputPrice, category, brands, handleCheckBox}: IPropsProduct) => {
 
@@ -54,6 +55,7 @@ const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSea
             add to busket
           </button>
           <button onClick={() => {hadleDelete(item)}}>Remove this</button>
+          <Link  to={`product-details/${item.id}`}>Details</Link>
         </div>
       ))}
     </div>
