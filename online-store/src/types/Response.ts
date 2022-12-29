@@ -18,11 +18,20 @@ export interface CartProductsData {
     groupTotalCount: number,
   },
 }
+export interface PercentageDiscounts {
+  [key: string]: number,
+}
 export interface BusketState {
   cartProductsData: CartProductsData,
+  promo: {
+    percentageDiscounts: PercentageDiscounts,
+    userPromoCodes: string[]
+  },
   cartTotalCount: number,
   cartTotalPrice: number,
   cartTotalCards: number,
+  totalDiscounAmount: number,
+  cartGrandTotal: number,
 }
 export interface Store {
   state: {
@@ -60,6 +69,21 @@ export interface Store {
   getTotalPrice(arr: Response[]): number,
   recalculateCartTotals(): void,
   recalculateCartTotalCards(): void,
+  promoCodeIsValid(code: string): boolean,
+  addUserPromoCode(code: string): void,
+  removeUserPromoCode(code: string): void,
+  recalculateTotalDiscountAmount(): void,
+  recalculateGrandTotal(): void,
+  setBusketStateToLocalStorage(): void,
+  clearCart(): void,
+  isItemInCart(productData: Response): boolean,
+}
+export interface StoreContext {
+  storeState: Store,
+  setCartProduct: (productData: Response) => void,
+  removeCartProduct: (productData: Response) => void,
+  updateUserPromoCodes: (code: string) => void,
+  applyUserPromoCode: (code: string) => void,
 }
 export interface IPropsProduct {
   displayProduct: boolean
