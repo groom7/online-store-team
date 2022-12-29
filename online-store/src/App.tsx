@@ -10,6 +10,8 @@ import { store } from './store/store';
 import { Response, Store } from './types/Response';
 import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
+import Details from './components/Details/Details';
+import NotFound from './pages/NotFound/NotFound';
 export interface StoreContext {
   storeState: Store;
   setCartProduct: (productData: Response) => void
@@ -61,6 +63,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/busket' element={<Busket />} />
+        <Route path='/product-details/:id' element={<Details loading={loading}/>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </StoreStateContext.Provider>
   )

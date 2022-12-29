@@ -45,10 +45,12 @@ export interface Store {
   changeDisplayStyle(type: string) : void;
   filterMainPage(): Response[];
   getAllProducts(): Response[];
+  getProductById(id: number): Response;
   getAllClearProducts() : Response[]
   addToBusket(product: Response): void;
   getAllBusketItems(): CartProductsData,
   busketIsEmpty(): boolean;
+  getAllBusketItemsLength(): number;
   removeFromBusket(productData: Response): void,
   getAllCattegories(): string[];
   addSelectOption(option: string) : void

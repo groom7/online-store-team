@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getAllBrands } from '../../../controllers/getAllBrands';
 import { getAllCattegories } from '../../../controllers/getAllCategories';
 import { resetFilters } from '../../../controllers/ResetFilters';
@@ -7,17 +7,20 @@ import { IPropsFilters } from '../../../types/Response';
 import { getAllProducts } from '../../../controllers/getAllProducts';
 import { getAllClearProducts } from '../../../controllers/getAllClearProducts';
 function Filters({inputPriceSecond,inputStockSecond,inputPrice, inputStock ,category, brands, handleCheckBox}: IPropsFilters) {
- 
+ const [copied, setCopied] = useState(false)
   const handleReset = () => {
     resetFilters()
     handleCheckBox('reset', '')
   }
- 
   return (
     <div className="filters__wrapper">
       <div className="filters__up">
         <button onClick={handleReset}>Reset Filters</button>
-        <button>Copy Link</button>
+        <button onClick={() => {
+          navigator.clipboard.writeText(window.location.href)
+          setCopied(true)
+        }
+          }>{copied ? 'Copied' : 'Copy Link'}</button>
       </div>
       <div className="filters__categories">
         Category

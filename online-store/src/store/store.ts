@@ -100,6 +100,9 @@ export const store: Store = {
   getAllProducts() {
     return this.filtersIsClear() ? this.state.products : this.filterMainPage();
   },
+  getProductById(id: number) {
+    return this.state.products.filter((item) => item.id === id)[0]
+  },
   getAllClearProducts() {
     return this.state.products
   },
@@ -130,6 +133,9 @@ export const store: Store = {
   },
     getAllBusketItems() {
         return this.state.busket.cartProductsData;
+    },
+    getAllBusketItemsLength() {
+      return this.state.busket.cartTotalCount
     },
     busketIsEmpty() {
         if (this.state.busket.cartTotalCount === 0) {
@@ -197,7 +203,7 @@ export const store: Store = {
   },
   addFilters(filter, payload) {
     const filters = this.state.filters;
-    if (filter === 'category' && typeof payload === 'string') {
+    if (filter === "category" && typeof payload === 'string') {
       if (filters.category.includes(payload as never)) {
         let index = filters.category.indexOf(payload as never);
         filters.category.splice(index, 1);
