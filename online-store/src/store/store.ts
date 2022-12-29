@@ -237,7 +237,9 @@ export const store: Store = {
       this.state.busket.totalDiscounAmount = 0;
       this.state.busket.cartGrandTotal = 0;
     },
-    
+    isItemInCart(productData: Response) {
+      return productData.id in store.state.busket.cartProductsData;
+    },
     getAllCattegories() {
     let cattegories: string[] = [];
     this.state.products.forEach((item) => {
