@@ -73,6 +73,8 @@ export interface Store {
   recalculateTotalDiscountAmount(): void,
   recalculateGrandTotal(): void,
   setBusketStateToLocalStorage(): void,
+  clearCart(): void,
+  isItemInCart(productData: Response): boolean,
 }
 export interface StoreContext {
   storeState: Store,

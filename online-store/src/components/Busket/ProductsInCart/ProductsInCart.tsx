@@ -106,4 +106,4 @@ function ProductsInCart() {
   )
 }
 
-export default ProductsInCart
+export default ProductsInCart;

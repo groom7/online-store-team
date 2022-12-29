@@ -72,18 +72,6 @@
     color: red;
     font-size: $font-small;
   }
-  .promo__input {
-    height: 45px;
-    padding: 0 10px;
-    font-size: $font-small;
-    &::-webkit-input-placeholder {
-      font-size: $font-small;
-      color: #212121;
-    }
-    &:hover {
-      background-color: #fafafa;
-    }
-  }
   .promo__test-promo-text {
     font-size: $font-small;
   }

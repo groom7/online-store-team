@@ -1,4 +1,6 @@
 @use 'fonts';
+@import './variables';
+
 
 html {
   font-family: 'Open Sans','Sans-serif';
@@ -31,4 +33,17 @@ button {
   width: 100%;
   max-width: 1340px;
   margin: 0 auto;
+}
+
+.input {
+  height: 45px;
+  padding: 0 10px;
+  font-size: $font-small;
+  &::-webkit-input-placeholder {
+    font-size: $font-small;
+    color: #212121;
+  }
+  &:hover {
+    background-color: #fafafa;
+  }
 }
