@@ -1,26 +1,10 @@
 import { CartProductsData, Response, Store } from "../types/Response"
+import { busketDefaultState } from "./constants";
+
 export const store: Store = {
   state: {
     products: [],
-    busket: 
-      JSON.parse(localStorage.getItem('busketState') || '{}') || 
-      {
-        cartProductsData: {
-
-        },
-        promo: {
-          percentageDiscounts: {
-            'NEWYEAR10': 10,
-            'LUCKY10':  10,
-          },
-          userPromoCodes: [],
-        },
-        cartTotalCount: 0,
-        cartTotalPrice: 0,
-        cartTotalCards: 0,
-        totalDiscounAmount: 0,
-        cartGrandTotal: 0
-      },
+    busket: JSON.parse(localStorage.getItem('busketState') || busketDefaultState),
     filters: {
       category: [],
       brands: [],

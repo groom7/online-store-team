@@ -6,19 +6,13 @@ import { removeFromBusket } from './controllers/removeFromBusket';
 import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
 import { store } from './store/store';
-import { Response, StoreContext } from './types/Response';
+import { Response, StoreContext, Store } from './types/Response';
 import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
 import { removeUserPromoCode } from './controllers/removeUserPromoCode';
 import { addUserPromoCode } from './controllers/addUserPromoCode';
 import Details from './components/Details/Details';
 import NotFound from './pages/NotFound/NotFound';
-export interface StoreContext {
-  storeState: Store;
-  setCartProduct: (productData: Response) => void
-  removeCartProduct: (productData: Response) => void
-}
-
 
 export const StoreStateContext = createContext<StoreContext>({
   storeState: store,

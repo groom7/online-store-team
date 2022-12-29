@@ -1,16 +1,13 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllBusketItemsLength } from '../../controllers/getAllBusketItemsLength'
 import { StoreStateContext } from '../../App';
 import './Header.scss'
 import cartIcon from '../../assets/images/shopping-cart.png'
-
 
 function Header() {
   const { storeState } = useContext(StoreStateContext);
   
   return (
-
     <header className='header'>
       <div className='outer-wrapper'>
         <div className="header-container">
