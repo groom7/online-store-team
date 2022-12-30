@@ -68,7 +68,7 @@ export const store: Store = {
       }
     if (filters.search !== '') {
       array = array.filter((item) =>
-        item.title.toLowerCase().includes(filters.search)
+        item.title.toLowerCase().includes(filters.search) || item.description.toLowerCase().includes(filters.search) || item.brand.toLowerCase().includes(filters.search) || item.category.toLowerCase().includes(filters.search)
       );
     }
     if (filters.sortBy !== '') {
@@ -286,7 +286,10 @@ export const store: Store = {
     this.state.filters.category = [];
     this.state.filters.brands = [];
     this.state.filters.stock = null;
+    this.state.filters.priceSecond = null
+    this.state.filters.stockSecond = null
     this.state.filters.price = null;
+    this.state.filters.displayActive = false
     this.state.filters.search = '';
     this.state.filters.sortBy = '';
   },

@@ -1,19 +1,12 @@
-import React from 'react';
-import { busketIsEmpty } from '../../../controllers/busketIsEmpty';
-import { getAllBusketItems } from '../../../controllers/getAllBusketItems';
+import React, { useContext } from 'react';
 import { getAllProducts } from '../../../controllers/getAllProducts';
 import { IPropsProduct } from '../../../types/Response';
 import { Link } from 'react-router-dom';
-
-const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSearch,search,inputPrice, category, brands, handleCheckBox}: IPropsProduct) => {
-
-  const handleClick = () => {
-    console.log(getAllBusketItems())
-  }
-  const tempHandleClick = () => {
-    console.log(busketIsEmpty())
-  }
- 
+import { StoreStateContext } from '../../../App';
+import { isItemInCart } from '../../../controllers/isItemInCart';
+import './product.scss'
+const Products = ({displayProduct,select,handleSearch,search, handleCheckBox}: IPropsProduct) => {
+const {setCartProduct, removeCartProduct} = useContext(StoreStateContext)
   return (
    <div className='product__wrapper'>
    <div className='filter__container'>
@@ -35,7 +28,7 @@ const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSea
    <div onClick={() => {handleCheckBox('display', 'small')}}>small</div>
    </div>
     <div className={`block__container ${displayProduct ? 'small' : 'big'}`}>
-      {getAllProducts().length === 0 ? <div>Product not found</div> : getAllProducts().map((item, i) => (
+      {getAllProducts().length === 0 ? <div className='product-not-found'>Product not found</div> : getAllProducts().map((item, i) => (
         <div className={`block__wrapper`} key={item.title}>
           <div>{item.title}</div>
           <div className='describtion'>
@@ -47,20 +40,11 @@ const Products = ({displayProduct,hadleDelete,handleAddToBusket,select,handleSea
             <div>{item.stock}</div>
           </div>
           <img className='block__img' src={item.images[0]} alt="" />
-          <button
-            onClick={() => {
-              handleAddToBusket(item);
-            }}
-          >
-            add to busket
-          </button>
-          <button onClick={() => {hadleDelete(item)}}>Remove this</button>
+          {isItemInCart(item) ? <button onClick={() => {removeCartProduct(item)}}>Remove this</button> : <button onClick={() => {setCartProduct(item);}}>add to busket</button>}
           <Link  to={`product-details/${item.id}`}>Details</Link>
         </div>
       ))}
     </div>
-    <button onClick={() => {handleClick()}}>se all prodducts in busket</button>
-    <button onClick={() => {tempHandleClick()}}>Is empty</button>
    </div>
   );
 }

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { getAllClearProducts } from '../../controllers/getAllClearProducts'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getProductById } from '../../controllers/getProductById'
 import { addToBusket } from '../../controllers/addToBusket'
 import './Details.scss'
+import { StoreStateContext } from '../../App'
+import { isItemInCart } from '../../controllers/isItemInCart'
 interface DetailsProps {
   loading: boolean
 }
 function Details({loading} : DetailsProps) {
+  const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
@@ -20,8 +22,7 @@ function Details({loading} : DetailsProps) {
     <div className='details__title'>{getProductById(currentId).title}</div>
     <div className='details__bottom'>
       <div className='details__bottom-images'>
-        {}
-          {Array.from(new Set(getProductById(currentId).images)).map((item) => (
+          {Array.from(new Set(currentId === 1 ? (getProductById(currentId).images.length !== 3 ? getProductById(currentId).images.splice(0, 2) : getProductById(currentId).images) : getProductById(currentId).images)).map((item) => (
             <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__bottom-img-item' src={item} alt="" /></div>
           ))}
       </div>
@@ -85,8 +86,8 @@ function Details({loading} : DetailsProps) {
       </div>
       <div className='details__bottom-buttons'>
         {getProductById(currentId).price}
-        <button>ADD TO CART</button>
-        <Link onClick={() => {addToBusket(getProductById(currentId))}} to={'/busket'}>BUY NOW</Link>
+        {isItemInCart(getProductById(currentId)) ? <button onClick={() => {removeCartProduct(getProductById(currentId))}}>Remove this</button> : <button onClick={() => {setCartProduct(getProductById(currentId));}}>add to busket</button>}
+        <Link onClick={() => {!isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()}} to={'/busket'}>BUY NOW</Link>
       </div>
     </div>
 

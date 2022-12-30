@@ -87,15 +87,9 @@ export interface StoreContext {
 }
 export interface IPropsProduct {
   displayProduct: boolean
-  hadleDelete(item: Response): void,
-  handleAddToBusket(item: Response): void,
   select: string,
   handleSearch(searchValue: string) : void,
   search: string,
-  category: [] | string[],
-    brands: [] | string[],
-    inputStock:  number,
-    inputPrice:  number,
     handleCheckBox(type: string, payload: string | number) : void
 }
 export interface IPropsFilters {
@@ -109,4 +103,7 @@ export interface IPropsFilters {
 }
 export interface HeaderProps {
   busket: Response[]
+}
+export interface MainProps {
+  loading: boolean
 }
