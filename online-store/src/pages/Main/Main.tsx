@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Filters from '../../components/Main/Filters/Filters';
 import Products from '../../components/Main/Products/Products';
-import '../../styles/scss/MainPage/mainPage.scss';
+import './mainPage.scss';
 import { addFilters } from '../../controllers/addFilter';
-import { setProducts } from '../../controllers/setProducts';
 import { getAllProducts } from '../../controllers/getAllProducts';
-import { Response } from '../../types/Response';
 import { addSelectOption } from '../../controllers/addSelectOption';
 import Header from '../../components/Header/Header';
-import { addToBusket } from '../../controllers/addToBusket';
-import { removeFromBusket } from '../../controllers/removeFromBusket';
 import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
 import { useSearchParams } from 'react-router-dom';
+import { getAllClearProducts } from '../../controllers/getAllClearProducts';
 function Main() {
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams()
@@ -23,8 +20,7 @@ function Main() {
   const Pdisplay = searchParams.get('Pdisplay')
   const Psearch = searchParams.get('Psearch')
   const params = []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const searchs: any = {}
+  const searchs: {[key: string] : string} = {}
   for(let entry of searchParams.entries()) {
     params.push(entry[0] + '=' + entry[1])
     searchs[entry[0]] = entry[1]
@@ -70,7 +66,6 @@ function Main() {
         }else {
           setSearchParams({...searchs, Pbrands: payload})
         }
-        
       }
     }
     if(getAllProducts().length !== 0 && typeof payload !== 'number') {
@@ -103,11 +98,11 @@ function Main() {
       if (payload === 'small') {
         changeDisplayStyle('small');
         setDisplayProduct(true);
-        setSearchParams({...searchs ,Pdisplay: true })
+        setSearchParams({...searchs ,Pdisplay: 'true' })
       } else {
         changeDisplayStyle('big');
         setDisplayProduct(false);
-        setSearchParams({...searchs ,Pdisplay: false })
+        setSearchParams({...searchs ,Pdisplay: 'false' })
       }
     }
   };
@@ -116,37 +111,15 @@ function Main() {
     addFilters('search', searchValue);
     setSearchParams({...searchs ,Psearch: searchValue })
   };
-  const handleAddToBusket = (item: Response) => {
-    addToBusket(item);
-    setBusket(busket.concat(item));
-  };
-  const hadleDelete = (item: Response) => {
-    removeFromBusket(item);
-    let mustBeRemoved = busket.find((items) => items === item);
-    if (mustBeRemoved !== undefined) {
-      let index = busket.indexOf(mustBeRemoved);
-      busket.splice(index, 1);
-      setBusket([...busket]);
-    }
-  };
   const setProduct = () => {
-    fetch('https://dummyjson.com/products?limit=100')
-      .then((data) => {
-        data.json().then((product) => {
-          setProducts(product.products);
-        });
-      })
-      .then(() => {
-        getAllProducts().length === 0 ? setProduct() : setLoading(false);
-      })
-      .catch((err) => {
-        if (err) {
-          return err;
-        }
-      });
+    getAllProducts().length === 0 ? setProduct() : setLoading(false);
   };
   useEffect(() => {
-    setProduct();
+    if(getAllClearProducts().length !== 100 && getAllProducts().length !== 0) {
+      setProduct()
+    }else {
+      setLoading(false)
+    }
     if(Pbrands !== null && brands.length === 0) {
       Pbrands.split("↕").forEach((item) => {
         addFilters('brands', item);
@@ -159,9 +132,9 @@ function Main() {
         setCategory(category.concat(item))
       })
     }
-    if(Pdisplay && !displayProduct) {
-      setDisplayProduct(true)
-      changeDisplayStyle('small');
+    if(Pdisplay !== null) {
+      setDisplayProduct(!!Pdisplay)
+      changeDisplayStyle(!!Pdisplay ? 'small' : 'big');
     }
     if(Psort !== null && select.length === 0) {
       setSelect(Psort);
@@ -184,9 +157,6 @@ function Main() {
       addFilters('search', Psearch);
     }
   }, [Pbrands, Pcategory, Pstock, Pprice, Psort, Pdisplay, Psearch]);
-  
-  
-  
 
   const [category, setCategory] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
@@ -196,7 +166,6 @@ function Main() {
   const [inputStockSecond, setInputStockSecond] = useState<number>(150);
   const [search, setSearch] = useState<string>('');
   const [select, setSelect] = useState<string>('');
-  const [busket, setBusket] = useState<Response[]>([]);
   const [displayProduct, setDisplayProduct] = useState(false);
 
   return (
@@ -213,19 +182,13 @@ function Main() {
           inputPrice={inputPrice}
         />
         {loading ? (
-          <div>Loading please wait...</div>
+          <div className='loading'>Loading please wait...</div>
         ) : (
           <Products
             displayProduct={displayProduct}
-            hadleDelete={hadleDelete}
-            handleAddToBusket={handleAddToBusket}
             select={select}
             handleSearch={handleSearch}
             search={search}
-            category={category}
-            inputPrice={inputPrice}
-            inputStock={inputStock}
-            brands={brands}
             handleCheckBox={handleCheckBox}
           />
         )}

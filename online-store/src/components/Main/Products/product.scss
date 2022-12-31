@@ -1,0 +1,10 @@
+.product__wrapper {
+    border: 2px solid black;
+    padding: 10px;
+    position: relative;
+}
+.product-not-found {
+    position: absolute;
+    top: calc(30% + 15vh);
+    left: calc(30% + 6vw);
+}

@@ -6,7 +6,7 @@ import { removeFromBusket } from './controllers/removeFromBusket';
 import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
 import { store } from './store/store';
-import { Response, StoreContext, Store } from './types/Response';
+import { Response, StoreContext } from './types/Response';
 import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
 import { removeUserPromoCode } from './controllers/removeUserPromoCode';
@@ -48,9 +48,7 @@ function App() {
       ...store,
     });
   };
-  
   const [loading, setLoading] = useState(true);
-  
   const setProduct = () => {
     fetch('https://dummyjson.com/products?limit=100').then((data) => {
       data.json().then((product) => {
@@ -78,7 +76,7 @@ function App() {
       }}>
       <Routes>
         <Route path='/' element={<Main />}/>
-        <Route path='/busket' element={<Busket />} />
+        <Route path='/busket/' element={<Busket />} />
         <Route path='/product-details/:id' element={<Details loading={loading}/>} />
         <Route path='*' element={<NotFound />} />
       </Routes>

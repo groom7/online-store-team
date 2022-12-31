@@ -1,0 +1,57 @@
+input[type=checkbox] {
+    position: absolute;
+    left: -999999px;
+}
+.filters__categories-wrapper, .filters__brands-wrapper {
+    display: flex;
+    align-items: center;
+}
+.active {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+}
+.none-active {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+}
+.filters__brand, .filters__categories {
+    overflow: scroll;
+    max-height: 300px;
+}
+.filters__range-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.filters__wrapper {
+    border: 2px solid black;
+    padding: 5px;
+    height: fit-content;
+}
+::-webkit-scrollbar { /* 1 - скроллбар */
+    width: 4px;
+    height: 1px;
+    background-color: white;
+  }
+
+  ::-webkit-scrollbar-button { /* 2 - кнопка */
+    opacity: 0;
+  }
+
+  ::-webkit-scrollbar-track { /* 3 - трек */
+  }
+
+  ::-webkit-scrollbar-track-piece { /* 4 - видимая часть трека */
+  }
+
+  ::-webkit-scrollbar-thumb { /* 5 - ползунок */
+    border-radius: 2px;
+    background-color: orange;
+  }
+
+  ::-webkit-scrollbar-corner { /* 6 - уголок */
+  }
+
+  ::-webkit-resizer { /* 7 - изменение размеров */
+  }
