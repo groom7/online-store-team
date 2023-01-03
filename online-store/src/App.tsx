@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState, createContext } from 'react';
 import { addToBusket } from './controllers/addToBusket';
 import { getAllProducts } from './controllers/getAllProducts';
