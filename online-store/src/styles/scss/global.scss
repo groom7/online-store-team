@@ -47,3 +47,21 @@ button {
     background-color: #fafafa;
   }
 }
+
+.start-shopping-button {
+  width: 260px;
+  font-size: $font-small;
+  font-weight: 600;
+  font-family: 'Open Sans','Sans-serif';
+  color: #fff;
+  padding: 16px;
+  margin: 0 auto;
+  background-color: #ff7004;
+  transition: ease-in 0.3s all;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  &:hover {
+    background-color: #212121;
+  }
+}
