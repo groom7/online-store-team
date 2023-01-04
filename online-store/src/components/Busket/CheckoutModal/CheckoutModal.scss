@@ -87,7 +87,8 @@
   }
   .card-number-info {
     width: 100%;
-    .card-number {
+    .payment-system-hint {
+      font-size: $font-small;
     }
   }
   .valid-through-info {
