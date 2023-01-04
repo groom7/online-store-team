@@ -73,7 +73,7 @@ const fullNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
 };
 const phoneNumberHandler = (event: ChangeEvent<HTMLInputElement>) => {
   setPhoneNumber(event.target.value);
-  const reg = /^\+\d{3,}$/;
+  const reg = /^\+\d{9,}$/;
   if (!reg.test(event.target.value)) {
     setPhoneNumberError('Incorrect phone number')
   } else {
@@ -230,6 +230,7 @@ return (
                   id='card-number'
                   maxLength={16}
                 />
+                <span className='payment-system-hint'>4-Visa, 5-MasterCard, 6-Maestro</span>
                 {(cardNumberDirty && cardNumberError) && (<span className='field-invalid-text'>{ cardNumberError }</span>)}
               </div>
               <div className="valid-through-info">
