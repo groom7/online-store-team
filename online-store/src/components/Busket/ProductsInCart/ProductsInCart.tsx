@@ -94,8 +94,10 @@ function ProductsInCart() {
               type="number"
               value={ productsPerPageState }
               onChange={ (event) => handlePerPageValueChange(event) }
+              onFocus={ (event) => event.target.select() }
               placeholder='count'
               min={1}
+              
             />
           </div>
         </div>
