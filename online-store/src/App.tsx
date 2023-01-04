@@ -10,8 +10,8 @@ import Main from './pages/Main/Main';
 import { Route, Routes } from 'react-router-dom';
 import { removeUserPromoCode } from './controllers/removeUserPromoCode';
 import { addUserPromoCode } from './controllers/addUserPromoCode';
-import Details from './components/Details/Details';
 import NotFound from './pages/NotFound/NotFound';
+import Details from './pages/Details/Details';
 
 export const StoreStateContext = createContext<StoreContext>({
   storeState: store,
