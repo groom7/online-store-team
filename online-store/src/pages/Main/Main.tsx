@@ -7,7 +7,7 @@ import { getAllProducts } from '../../controllers/getAllProducts';
 import { addSelectOption } from '../../controllers/addSelectOption';
 import Header from '../../components/Header/Header';
 import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
-import { useSearchParams } from 'react-router-dom';
+import { redirect, useSearchParams } from 'react-router-dom';
 import { getAllClearProducts } from '../../controllers/getAllClearProducts';
 import Footer from '../../components/Footer/Footer';
 function Main() {
@@ -134,24 +134,36 @@ function Main() {
       })
     }
     if(Pdisplay !== null) {
-      setDisplayProduct(!!Pdisplay)
-      changeDisplayStyle(!!Pdisplay ? 'small' : 'big');
+      if(Pdisplay === 'true' || Pdisplay === 'false') {
+        setDisplayProduct(Pdisplay === 'true' ? true : false)
+        changeDisplayStyle(Pdisplay === 'true' ? 'small' : 'big');
+      }else {
+        handleCheckBox('reset', '')
+      }
     }
     if(Psort !== null && select.length === 0) {
       setSelect(Psort);
       addSelectOption(Psort);
     }
     if(Pprice !== null && inputPrice === 1 && inputPriceSecond === 1749) {
-      setInputPrice(+(Pprice.split("↕")[0]))
+      if(+(Pprice.split('↕')[0]) > 0 && +(Pprice.split('↕')[1]) <= 1749) {
+        setInputPrice(+(Pprice.split("↕")[0]))
       addFilters('price', +(Pprice.split("↕")[0]))
       setInputPriceSecond(+(Pprice.split("↕")[1]))
       addFilters('price-2', +(Pprice.split("↕")[1]))
+      }else {
+        handleCheckBox('reset', '')
+      }
     }
     if(Pstock !== null && inputStock === 2 && inputStockSecond === 150) {
-      setInputStock(+(Pstock.split("↕")[0]))
+      if(+(Pstock.split('↕')[0]) >= 2 && +(Pstock.split('↕')[1]) <= 150) {
+        setInputStock(+(Pstock.split("↕")[0]))
       addFilters('stock', +(Pstock.split("↕")[0]))
       setInputStockSecond(+(Pstock.split("↕")[1]))
       addFilters('stock-2', +(Pstock.split("↕")[1]))
+      }else {
+        handleCheckBox('reset', '')
+      }
     }
     if(Psearch !== '' && Psearch !== null && search === '') {
       setSearch(Psearch)

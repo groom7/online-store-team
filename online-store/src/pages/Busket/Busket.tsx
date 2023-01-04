@@ -6,8 +6,9 @@ import Summary from '../../components/Busket/Summary/Summary';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import './Busket.scss';
+import { BusketProps } from '../../types/Response';
 
-function Busket() {
+function Busket({modalActive, setModalActive}: BusketProps) {
   const { storeState } = useContext(StoreStateContext);
   return (
     <>
@@ -17,7 +18,7 @@ function Busket() {
         ? <EmptyCart /> 
         : <Fragment>
           <ProductsInCart />
-          <Summary />
+          <Summary modalActive={modalActive} setModalActive={setModalActive} />
         </Fragment>
         }
       </section>
