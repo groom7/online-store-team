@@ -3,8 +3,9 @@ import { StoreStateContext } from '../../../App';
 import { promoCodeIsValid } from '../../../controllers/promoCodeIsValid';
 import CheckoutModal from '../CheckoutModal/CheckoutModal';
 import './Summary.scss';
+import { BusketProps } from '../../../types/Response';
 
-function Summary() {
+function Summary({modalActive, setModalActive}: BusketProps) {
   const { storeState, updateUserPromoCodes, applyUserPromoCode } = useContext(StoreStateContext);
   const totalDiscounAmount = storeState.state.busket.totalDiscounAmount;
   const [promoCode, setPromoCode] = useState('');
@@ -28,7 +29,7 @@ function Summary() {
     }
   };
   
-  const [modalActive, setModelActive] = useState(false);
+  
   
   return (
     <>
@@ -73,9 +74,9 @@ function Summary() {
           <span className='promo__test-promo-text'>Use promo: 'NEWYEAR10', 'LUCKY10'</span>
         </section>
         <span className='summary__grand-total'>Grand total: ${ storeState.state.busket.cartGrandTotal }</span>
-        <button className='summary__checkou-button' onClick={ () => setModelActive(true) } >PROCEED TO CHECKOUT</button>
+        <button className='summary__checkou-button' onClick={ () => setModalActive(true) } >PROCEED TO CHECKOUT</button>
       </div>
-      <CheckoutModal active={ modalActive } setActive={ setModelActive }/>
+      <CheckoutModal active={ modalActive } setActive={ setModalActive }/>
     </>
   )
 }

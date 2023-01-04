@@ -5,16 +5,20 @@ import { addToBusket } from '../../controllers/addToBusket'
 import './Details.scss'
 import { StoreStateContext } from '../../App'
 import { isItemInCart } from '../../controllers/isItemInCart'
-interface DetailsProps {
-  loading: boolean
-}
-function Details({loading} : DetailsProps) {
+import { DetailsProps } from '../../types/Response'
+
+
+function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
     !loading ? setCurrentImg(getProductById(currentId).images[0]) : setCurrentImg('')
   }, [])
+  const linkHandler = () => {
+    !isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()
+    setModalActive(true)
+  }
   return (
   <>
   {loading ? <div>Loading...</div> : <><Link to={'/'}>store</Link>{`>>${getProductById(currentId).category}>>${getProductById(currentId).brand}>>${getProductById(currentId).title}`}
@@ -87,7 +91,7 @@ function Details({loading} : DetailsProps) {
       <div className='details__bottom-buttons'>
         {getProductById(currentId).price}
         {isItemInCart(getProductById(currentId)) ? <button onClick={() => {removeCartProduct(getProductById(currentId))}}>Remove this</button> : <button onClick={() => {setCartProduct(getProductById(currentId));}}>add to busket</button>}
-        <Link onClick={() => {!isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()}} to={'/busket'}>BUY NOW</Link>
+        <Link  onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
       </div>
     </div>
 
@@ -96,4 +100,4 @@ function Details({loading} : DetailsProps) {
   )
 }
 
-export default Details
+export default DetailsComponent

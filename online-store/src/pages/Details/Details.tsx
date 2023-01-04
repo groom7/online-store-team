@@ -1,8 +1,12 @@
 import React from 'react'
+import DetailsComponent from '../../components/Details/Details'
+import { DetailsProps } from '../../types/Response'
 
-function Details() {
+function Details({loading, setModalActive} : DetailsProps) {
   return (
-    <div>Details</div>
+    <>
+    <DetailsComponent loading={loading} setModalActive={setModalActive}/>
+    </>
   )
 }
 

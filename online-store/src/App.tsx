@@ -23,12 +23,16 @@ export const StoreStateContext = createContext<StoreContext>({
 
 function App() {
   const [storeState, setStore] = useState(store);
+  const [modalActive, setModalActivity] = useState(false);
   const setCartProduct = (productData: Response) => {
     addToBusket(productData);
     setStore({
       ...store,
     });
   };
+  const setModalActive = (modalActive: boolean) => {
+    setModalActivity(modalActive)
+  }
   const removeCartProduct = (productData: Response) => {
     removeFromBusket(productData);
     setStore({
@@ -75,8 +79,8 @@ function App() {
       }}>
       <Routes>
         <Route path='/' element={<Main />}/>
-        <Route path='/busket/' element={<Busket />} />
-        <Route path='/product-details/:id' element={<Details loading={loading}/>} />
+        <Route path='/busket/' element={<Busket modalActive={modalActive} setModalActive={setModalActive} />} />
+        <Route path='/product-details/:id' element={<Details  setModalActive={setModalActive} loading={loading}/>} />
         <Route path='*' element={<NotFound />} />
         <Route path='/404' element={<NotFound />} />
       </Routes>

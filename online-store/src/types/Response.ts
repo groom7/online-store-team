@@ -107,3 +107,11 @@ export interface HeaderProps {
 export interface MainProps {
   loading: boolean
 }
+export interface DetailsProps {
+  loading: boolean,
+  setModalActive(modalActive: boolean) : void
+}
+export interface BusketProps {
+  modalActive: boolean,
+  setModalActive(modalActive: boolean) : void
+}
