@@ -10,7 +10,7 @@ function CheckoutModal(
     setActive 
   }: {
     active: boolean,
-    setActive: React.Dispatch<React.SetStateAction<boolean>>
+    setActive(modalActive: boolean) : void
   }
 ) {
   const [fullName, setFullName] = useState('');
