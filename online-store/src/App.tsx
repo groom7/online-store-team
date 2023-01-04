@@ -79,6 +79,7 @@ function App() {
         <Route path='/busket/' element={<Busket />} />
         <Route path='/product-details/:id' element={<Details loading={loading}/>} />
         <Route path='*' element={<NotFound />} />
+        <Route path='/404' element={<NotFound />} />
       </Routes>
     </StoreStateContext.Provider>
   )

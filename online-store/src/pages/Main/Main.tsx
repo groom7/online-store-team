@@ -133,8 +133,8 @@ function Main() {
       })
     }
     if(Pdisplay !== null) {
-      setDisplayProduct(!!Pdisplay)
-      changeDisplayStyle(!!Pdisplay ? 'small' : 'big');
+      setDisplayProduct(Pdisplay === 'true' ? true : false)
+      changeDisplayStyle(Pdisplay === 'true' ? 'small' : 'big');
     }
     if(Psort !== null && select.length === 0) {
       setSelect(Psort);
