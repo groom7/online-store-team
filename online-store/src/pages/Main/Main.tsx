@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Filters from '../../components/Main/Filters/Filters';
 import Products from '../../components/Main/Products/Products';
 import './mainPage.scss';
@@ -9,6 +9,7 @@ import Header from '../../components/Header/Header';
 import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
 import { useSearchParams } from 'react-router-dom';
 import { getAllClearProducts } from '../../controllers/getAllClearProducts';
+import Footer from '../../components/Footer/Footer';
 function Main() {
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams()
@@ -169,31 +170,34 @@ function Main() {
   const [displayProduct, setDisplayProduct] = useState(false);
 
   return (
-    <div className="main">
+    <>
       <Header />
-      <div className="main__wrapper">
-        <Filters
-          inputPriceSecond={inputPriceSecond}
-          inputStockSecond={inputStockSecond}
-          category={category}
-          brands={brands}
-          handleCheckBox={handleCheckBox}
-          inputStock={inputStock}
-          inputPrice={inputPrice}
-        />
-        {loading ? (
-          <div className='loading'>Loading please wait...</div>
-        ) : (
-          <Products
-            displayProduct={displayProduct}
-            select={select}
-            handleSearch={handleSearch}
-            search={search}
+      <div className="main">
+        <div className="main__wrapper">
+          <Filters
+            inputPriceSecond={inputPriceSecond}
+            inputStockSecond={inputStockSecond}
+            category={category}
+            brands={brands}
             handleCheckBox={handleCheckBox}
+            inputStock={inputStock}
+            inputPrice={inputPrice}
           />
-        )}
+          {loading ? (
+            <div className='loading'>Loading please wait...</div>
+          ) : (
+            <Products
+              displayProduct={displayProduct}
+              select={select}
+              handleSearch={handleSearch}
+              search={search}
+              handleCheckBox={handleCheckBox}
+            />
+          )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

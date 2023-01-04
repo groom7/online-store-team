@@ -1,11 +1,21 @@
 @use 'fonts';
 @import './variables';
 
-
 html {
   font-family: 'Open Sans','Sans-serif';
   font-weight: 400px;
   color: #414141;
+}
+
+html, 
+body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+	flex-direction: column;
+  min-height: 100%;
 }
 
 *, *::before, *::after {
