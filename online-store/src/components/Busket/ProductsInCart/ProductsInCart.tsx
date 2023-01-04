@@ -1,5 +1,5 @@
-import { useContext, useState, ChangeEvent, useEffect } from 'react';
-import { useSearchParams } from "react-router-dom";
+import { useContext, useState, ChangeEvent, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './ProductsInCart.scss';
 import ProductCard from '../ProductCard/ProductCard';
 import cartIcon from '../../../assets/images/shopping-cart.png';
@@ -9,38 +9,50 @@ import { createPagesNumbers } from './createPagesNumbers';
 function ProductsInCart() {
   const { storeState } = useContext(StoreStateContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const defaultStates = {
-    currentPage: 
-      Number(searchParams.get('currentPage')) 
-      || +JSON.parse(localStorage.getItem('currentPage') || '1'),
-    productsPerPageState: 
-      Number(searchParams.get('productsPerPage'))
-      || +JSON.parse(localStorage.getItem('perPageCount') || '3')
-  };
+  const isGetSearchParams = useRef(false); 
+  let actualCurrentPage = 1;
+  let actualProductsPerPageValue = 3;
+  const [currentPageState, setCurrentPageState] = useState(actualCurrentPage);
+  const [productsPerPageState, setProductsPerPageState] = useState(actualProductsPerPageValue);
   useEffect(() => {
-    searchParams.set('productsPerPage', String(defaultStates.productsPerPageState));
-    searchParams.set('currentPage', String(defaultStates.currentPage));
-    setSearchParams(searchParams);
+    for(var key of searchParams.keys()) {
+      if (String(key) !== 'productsPerPage' || String(key) !== 'currentPage') {
+        setSearchParams({});
+        break;
+      }
+    }
+    const searchParamCurrentPage = searchParams.get('currentPage');
+    if (searchParamCurrentPage && +searchParamCurrentPage > 0) {
+      actualCurrentPage = +searchParamCurrentPage;
+      setCurrentPageState(actualCurrentPage);
+    }
+    const searchParamProductsPerPage = searchParams.get('productsPerPage');
+    if (searchParamProductsPerPage && +searchParamProductsPerPage > 0) {
+      actualProductsPerPageValue = +searchParamProductsPerPage;
+      setProductsPerPageState(actualProductsPerPageValue);
+    }
+    
+    isGetSearchParams.current = true;
   }, []);
-  const [currentPageState, setCurrentPageState] = useState(defaultStates.currentPage);
-  const [productsPerPageState, setProductsPerPageState] = useState(defaultStates.productsPerPageState);
+  
+  useEffect(() => {
+    if (!isGetSearchParams.current) {
+      searchParams.set('currentPage', String(currentPageState));
+      searchParams.set('productsPerPage', String(productsPerPageState));
+      setSearchParams(searchParams);
+    }
+    isGetSearchParams.current = false;
+  }, [currentPageState, productsPerPageState]);
   const productsPagesCount = Math.ceil(storeState.state.busket.cartTotalCards / productsPerPageState);
   const pagesNumbers = createPagesNumbers(productsPagesCount, currentPageState);
   const handlePerPageValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value === '') {
-      setProductsPerPageState(defaultStates.productsPerPageState);
-    } else {
-      setProductsPerPageState(+event.target.value)
+    const productsPerPageValue = event.target.value;
+    if ((/^[1-9][0-9]*$/).test(productsPerPageValue)) {
+      setProductsPerPageState(+productsPerPageValue);
     }
-    localStorage.setItem('perPageCount', event.target.value);
-    searchParams.set('productsPerPage', event.target.value)
-    setSearchParams(searchParams);
   }
   const handleCurrenPageCLick = (pageNumber: number) => {
     setCurrentPageState(pageNumber);
-    localStorage.setItem('currentPage', String(pageNumber));
-    searchParams.set('currentPage', String(pageNumber))
-    setSearchParams(searchParams);
   };
   const productsOnPage = Object.values(storeState.state.busket.cartProductsData)
     .slice(
@@ -49,9 +61,6 @@ function ProductsInCart() {
     );
   if (productsOnPage.length === 0 ) {
     setCurrentPageState(currentPageState - 1);
-    searchParams.set('currentPage', String(currentPageState - 1))
-    setSearchParams(searchParams);
-    localStorage.setItem('currentPage', String(currentPageState - 1));
   }
   
   return (
@@ -83,9 +92,10 @@ function ProductsInCart() {
             <input
               className='items-per-page__input'
               type="number"
-              defaultValue={ defaultStates.productsPerPageState }
+              value={ productsPerPageState }
               onChange={ (event) => handlePerPageValueChange(event) }
               placeholder='count'
+              min={1}
             />
           </div>
         </div>
