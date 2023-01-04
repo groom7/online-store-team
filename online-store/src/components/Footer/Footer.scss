@@ -1,0 +1,50 @@
+@import '../../styles/scss/variables.scss';
+
+footer {
+  height: 64px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #2f333a;
+  padding: 16px;
+  .outer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 16px;
+  }
+  .image-link {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0px;
+  }
+  .github-block__link {
+    width: 24px;
+    height: 24px;
+  }
+  .github-block__logo {
+    width: 24px;
+    height: 24px;
+    transition: all ease 0.3s;
+  }
+  .rss-block__link {
+    height: 24px;
+  }
+  .rss-block__logo {
+    height: 24px;
+    transition: all ease 0.3s;
+    fill: hsl(348, 100%, 47%);
+    filter: invert(1);
+  }
+  .developed-year {
+    color: #FFFFFF;
+    font-size: $font-small;
+    line-height: 90%;
+    margin-left: auto;
+    &:before {
+      content: '©';
+    }
+  }
+}
+

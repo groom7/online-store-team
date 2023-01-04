@@ -3,6 +3,7 @@ import { StoreStateContext } from '../../App';
 import EmptyCart from '../../components/Busket/EmptyCart/EmptyCart';
 import ProductsInCart from '../../components/Busket/ProductsInCart/ProductsInCart';
 import Summary from '../../components/Busket/Summary/Summary';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import './Busket.scss';
 import { BusketProps } from '../../types/Response';
@@ -21,6 +22,7 @@ function Busket({modalActive, setModalActive}: BusketProps) {
         </Fragment>
         }
       </section>
+      <Footer />
     </>
   )
 }

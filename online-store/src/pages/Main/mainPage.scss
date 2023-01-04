@@ -1,3 +1,7 @@
+.main {
+  flex: 1 0 auto;
+  padding: 48px 0;
+}
 .main__wrapper {
     display: grid;
     grid-template-columns: 294px 1fr;

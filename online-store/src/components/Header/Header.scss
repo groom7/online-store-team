@@ -2,9 +2,10 @@
 
 .header {
   height: 80px;
-  padding: 16px 0;
+  padding: 16px;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #ebebeb;
   .header-container {
     display: flex;
     justify-content: space-between;
