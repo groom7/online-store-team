@@ -13,7 +13,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
-    !loading ? setCurrentImg(getProductById(currentId).images[0]) : setCurrentImg('')
+    !loading ? setCurrentImg(getProductById(currentId).images[0]) : setCurrentImg('https://cdn2.iconfinder.com/data/icons/pointers-5/24/cursor-top-left-512.png')
   }, [])
   const linkHandler = () => {
     !isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()
@@ -21,7 +21,10 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   }
   return (
   <>
-  {loading ? <div>Loading...</div> : <><Link to={'/'}>store</Link>{`>>${getProductById(currentId).category}>>${getProductById(currentId).brand}>>${getProductById(currentId).title}`}
+  {loading ? <div>Loading...</div> : <>
+  <div className="bread__link">
+  <Link className='bread__link-store' to={'/'}>store</Link>{`>>${getProductById(currentId).category}>>${getProductById(currentId).brand}>>${getProductById(currentId).title}`}
+  </div>
   <div className='details__wrapper'>
     <div className='details__title'>{getProductById(currentId).title}</div>
     <div className='details__bottom'>
@@ -31,9 +34,9 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
           ))}
       </div>
       <div className='details__bottom-img'>
-            <img src={currentImg} alt="" />
+            <img src={currentImg} className='details__bottom-pict' alt="" />
       </div>
-      <div className='details__bottom-describtion'>
+      <div className='details__bottom-describtion-wrapper'>
             <div className='details__bottom-describtion'>
               <div className="details__describtion-up">
               Description:
@@ -89,9 +92,9 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
             </div>
       </div>
       <div className='details__bottom-buttons'>
-        {getProductById(currentId).price}
-        {isItemInCart(getProductById(currentId)) ? <button onClick={() => {removeCartProduct(getProductById(currentId))}}>Remove this</button> : <button onClick={() => {setCartProduct(getProductById(currentId));}}>add to busket</button>}
-        <Link  onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
+        ${getProductById(currentId).price}
+        {isItemInCart(getProductById(currentId)) ? <button className='add-to-busket-btn' onClick={() => {removeCartProduct(getProductById(currentId))}}>rEMOVE FROM BUSKET</button> : <button className='add-to-busket-btn' onClick={() => {setCartProduct(getProductById(currentId));}}>ADD TO BUSKET</button>}
+        <Link className='buy-now__link' onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
       </div>
     </div>
 

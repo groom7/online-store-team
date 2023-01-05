@@ -6,4 +6,85 @@
 }
 .details__bottom {
     display: flex;
+    background-color: #ffa50040;
+    border: 2px solid #ff7004;
+}
+.details__bottom-img-item {
+  border: 1px solid #ff7004;
+}
+.details__bottom-images {
+  display: flex;
+  flex-direction: column;
+}
+.details__bottom-images div {
+  cursor: pointer;
+}
+.details__bottom-pict {
+  max-width: 400px;
+}
+.details__bottom-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.details__bottom-describtion {
+  border: 1px solid #ff7004;
+  margin: 5px 0px;
+  border-radius: 8px;
+  text-align: center;
+}
+.details__bottom-describtion-wrapper {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.details__describtion-up, .details__discount-up, .details__rating-up, .details__stock-up , .details__brand-up, .details__category-up {
+  background-color: #181a1c;
+  color: #ff7004;
+}
+.details__bottom-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  color: #ff7004;
+  align-items: center;
+}
+.buy-now__link {
+  padding: 5px 10px;
+  background-color: #9a3535;
+  color: #ff7004;
+  border: 1px solid #ff7004;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.add-to-busket-btn {
+  padding: 5px 10px;
+  background-color: #9a3535;
+  color: #ff7004;
+  border: 1px solid #ff7004;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.details__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.details__title {
+  color: #ff7004;
+  font-size: 24px;
+  font-weight: 900;
+}
+.bread__link {
+  display: flex;
+  justify-content: center;
+    font-size: 24px;
+}
+.bread__link-store {
+  text-decoration: none;
+  color: #ff7004a8;
+  cursor: pointer;
+}
+.bread__link {
+  color: #ff7004a8;
 }
