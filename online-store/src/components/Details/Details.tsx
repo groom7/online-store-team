@@ -26,7 +26,8 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   <Link className='bread__link-store' to={'/'}>store</Link>{`>>${getProductById(currentId).category}>>${getProductById(currentId).brand}>>${getProductById(currentId).title}`}
   </div>
   <div className='details__wrapper'>
-    <div className='details__title'>{getProductById(currentId).title}</div>
+   <div className="details__wrapper-top">
+   <div className='details__title'>{getProductById(currentId).title}</div>
     <div className='details__bottom'>
       <div className='details__bottom-images'>
           {Array.from(new Set(currentId === 1 ? (getProductById(currentId).images.length !== 3 ? getProductById(currentId).images.splice(0, 2) : getProductById(currentId).images) : getProductById(currentId).images)).map((item) => (
@@ -93,10 +94,11 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
       </div>
       <div className='details__bottom-buttons'>
         ${getProductById(currentId).price}
-        {isItemInCart(getProductById(currentId)) ? <button className='add-to-busket-btn' onClick={() => {removeCartProduct(getProductById(currentId))}}>rEMOVE FROM BUSKET</button> : <button className='add-to-busket-btn' onClick={() => {setCartProduct(getProductById(currentId));}}>ADD TO BUSKET</button>}
+        {isItemInCart(getProductById(currentId)) ? <button className='add-to-busket-btn' onClick={() => {removeCartProduct(getProductById(currentId))}}>REMOVE FROM BUSKET</button> : <button className='add-to-busket-btn' onClick={() => {setCartProduct(getProductById(currentId));}}>ADD TO BUSKET</button>}
         <Link className='buy-now__link' onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
       </div>
     </div>
+   </div>
 
   </div></>}
   </>
