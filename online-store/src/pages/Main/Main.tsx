@@ -7,7 +7,7 @@ import { getAllProducts } from '../../controllers/getAllProducts';
 import { addSelectOption } from '../../controllers/addSelectOption';
 import Header from '../../components/Header/Header';
 import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
-import { redirect, useSearchParams } from 'react-router-dom';
+import {  useSearchParams } from 'react-router-dom';
 import { getAllClearProducts } from '../../controllers/getAllClearProducts';
 import Footer from '../../components/Footer/Footer';
 function Main() {

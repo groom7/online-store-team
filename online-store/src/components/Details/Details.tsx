@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 import { getProductById } from '../../controllers/getProductById'
 import { addToBusket } from '../../controllers/addToBusket'
 import './Details.scss'
@@ -9,10 +9,15 @@ import { DetailsProps } from '../../types/Response'
 
 
 function DetailsComponent({loading, setModalActive} : DetailsProps) {
+  const navigate = useNavigate()
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
+ 
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
+    if((currentId <= 0 || currentId > 100) || isNaN(currentId) ) {
+      navigate('/404')
+    }
     !loading ? setCurrentImg(getProductById(currentId).images[0]) : setCurrentImg('https://cdn2.iconfinder.com/data/icons/pointers-5/24/cursor-top-left-512.png')
   }, [])
   const linkHandler = () => {
