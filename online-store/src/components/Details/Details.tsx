@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, redirect, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getProductById } from '../../controllers/getProductById'
 import { addToBusket } from '../../controllers/addToBusket'
 import './Details.scss'
@@ -12,7 +12,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const navigate = useNavigate()
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
- 
+ const [whatDisplay, setWhatDisplay] = useState('details')
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
     if((currentId <= 0 || currentId > 100) || isNaN(currentId) ) {
@@ -26,85 +26,73 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   }
   return (
   <>
-  {loading ? <div>Loading...</div> : <>
-  <div className="bread__link">
-  <Link className='bread__link-store' to={'/'}>store</Link>{`>>${getProductById(currentId).category}>>${getProductById(currentId).brand}>>${getProductById(currentId).title}`}
+  {loading ? <div>Loading...</div>
+   :
+   <>
+   <div className="bread__link">
+    <div className="bread__link-wrapper">
+    <div className='breand__link-left'>
+    Online Store
+    </div>
+    <div className="bread__link-right">
+  <Link className='bread__link-store' to={'/'}>store</Link>{`/${getProductById(currentId).category}/${getProductById(currentId).brand}/${getProductById(currentId).title}`}
+    </div>
+    </div>
   </div>
+   <div className='details'>
   <div className='details__wrapper'>
-   <div className="details__wrapper-top">
-   <div className='details__title'>{getProductById(currentId).title}</div>
-    <div className='details__bottom'>
-      <div className='details__bottom-images'>
+    <div className="details__wrapper-left">
+    <div className='details__wrapper-left-top'>
+            <img src={currentImg} className='details__item-img' alt="" />
+      </div>
+    <div className='details__wrapper-left-bottom'>
           {Array.from(new Set(currentId === 1 ? (getProductById(currentId).images.length !== 3 ? getProductById(currentId).images.splice(0, 2) : getProductById(currentId).images) : getProductById(currentId).images)).map((item) => (
-            <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__bottom-img-item' src={item} alt="" /></div>
+            <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__items-img' src={item} alt="" /></div>
           ))}
       </div>
-      <div className='details__bottom-img'>
-            <img src={currentImg} className='details__bottom-pict' alt="" />
-      </div>
-      <div className='details__bottom-describtion-wrapper'>
-            <div className='details__bottom-describtion'>
-              <div className="details__describtion-up">
-              Description:
-              </div>
-              <div className="details__describtion-bottom">
-                {getProductById(currentId).description}
-              </div>
-            </div>
-
-            <div className='details__bottom-describtion'>
-              <div className="details__discount-up">
-              Discount Percentage:
-              </div>
-              <div className="details__discount-bottom">
-                {getProductById(currentId).discountPercentage}
-              </div>
-            </div>
-
-            <div className='details__bottom-describtion'>
-              <div className="details__rating-up">
-              Rating:
-              </div>
-              <div className="details__rating-bottom">
-                {getProductById(currentId).rating}
-              </div>
-            </div>
-
-            <div className='details__bottom-describtion'>
-              <div className="details__stock-up">
-              Stock:
-              </div>
-              <div className="details__stock-bottom">
-                {getProductById(currentId).stock}
-              </div>
-            </div>
-
-            <div className='details__bottom-describtion'>
-              <div className="details__brand-up">
-              Brand:
-              </div>
-              <div className="details__brand-bottom">
-                {getProductById(currentId).brand}
-              </div>
-            </div>
-
-            <div className='details__bottom-describtion'>
-              <div className="details__category-up">
-              Category:
-              </div>
-              <div className="details__category-bottom">
-                {getProductById(currentId).category}
-              </div>
-            </div>
-      </div>
-      <div className='details__bottom-buttons'>
-        ${getProductById(currentId).price}
-        {isItemInCart(getProductById(currentId)) ? <button className='add-to-busket-btn' onClick={() => {removeCartProduct(getProductById(currentId))}}>REMOVE FROM BUSKET</button> : <button className='add-to-busket-btn' onClick={() => {setCartProduct(getProductById(currentId));}}>ADD TO BUSKET</button>}
-        <Link className='buy-now__link' onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
-      </div>
     </div>
+    <div className="details__wrapper-right">
+    <div className='details__title'>{getProductById(currentId).title}</div>
+    <div className="details__rating">
+    <div className="rating-mini">
+	<span className={Math.ceil(getProductById(currentId).rating) >= 1 ? 'active-star' : ''}></span>	
+	<span className={Math.ceil(getProductById(currentId).rating) >= 2 ? 'active-star' : ''}></span>    
+	<span className={Math.ceil(getProductById(currentId).rating) >= 3 ? 'active-star' : ''}></span>  
+	<span className={Math.ceil(getProductById(currentId).rating) >= 4 ? 'active-star' : ''}></span>    
+	<span className={Math.ceil(getProductById(currentId).rating) >= 5 ? 'active-star' : ''}></span>
+</div>
+<div className="details__price">
+  ${getProductById(currentId).price}
+</div>
+<div className="details__describtion">
+          {getProductById(currentId).description}
+        </div>
+    </div>
+   <div className="details__buttons__wrapper">
+   {isItemInCart(getProductById(currentId)) ? <button className='add-to-busket-btn' onClick={() => {removeCartProduct(getProductById(currentId))}}>REMOVE FROM BUSKET</button> : <button className='add-to-busket-btn' onClick={() => {setCartProduct(getProductById(currentId));}}>ADD TO BUSKET</button>}
+        <Link className='buy-now__link' onClick={() => {linkHandler()}} to={'/busket'}>BUY NOW</Link>
    </div>
-
+    </div>
+  </div>
+  <div className="details__product-details">
+    <div className="details__product-details-wrapper">
+    <div className={`details__product-details-left  ${whatDisplay === 'details' ? '' : 'details__product-active'}`} onClick={() => {setWhatDisplay('product-details')}}>
+    Product Details
+    </div>
+  <div className={`details__product-details-left  ${whatDisplay === 'details' ? 'details__product-active' : ''}`} onClick={() => {setWhatDisplay('details')}}>
+    Details
+    </div>
+    </div>
+        <div className="details__product-product-details">
+            {whatDisplay === 'details' ? <div className='product-details__details'>{getProductById(currentId).description}</div> : <div className='product-details__details'><ul>
+            <li><span>brand</span>{getProductById(currentId).brand}</li>
+            <li><span>category</span>{getProductById(currentId).category}</li>
+            <li><span>rating</span>{getProductById(currentId).rating}</li>
+            <li><span>stock</span>{getProductById(currentId).stock}</li>
+            <li><span>discont</span>{getProductById(currentId).discountPercentage}</li>
+            </ul></div>}
+        </div>
+  </div>
   </div></>}
   </>
   )
