@@ -20,6 +20,7 @@
 .details {
   max-width: 1200px;
   margin: 0 auto;
+  flex: 1 0 auto;
 }
 
 .details__wrapper-left-bottom div {
@@ -187,11 +188,7 @@ border-bottom: 1px solid  #ff7004;
 .details__product-details {
   margin-top: 60px;
 }
-footer {
-  position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+
 .bread__link {
   background-color: #f4f5f7;
   background-repeat: no-repeat;
