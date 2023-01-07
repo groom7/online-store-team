@@ -49,12 +49,12 @@ const {setCartProduct, removeCartProduct} = useContext(StoreStateContext)
                 </div>
               </div>
             </Link>
-            <Link className='item-details-page-link info' to={`product-details/${item.id}`}>
+            <Link className='item-details-page-link' to={`product-details/${item.id}`}>
               <div className='item-info'>
-                <title className='item-info__title'>{item.title}</title>
+                <p className='item-info__title'>{item.title}</p>
                 <span className='item-info__price'>${item.price}</span>
                 <span className='item-info__category'>{item.category}</span>
-                <span className='item-info__discountPercentage'>Discount: {item.discountPercentage}%</span>
+                <p className='item-info__discountPercentage'>Discount: {item.discountPercentage}%</p>
                 <span className='item-info__rating'>Rating: {item.rating}</span>
                 <span className='item-info__stock'>Available: {item.stock} pcs</span>
               </div>

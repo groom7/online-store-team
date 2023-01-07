@@ -3,6 +3,15 @@
 .filters__wrapper {
   padding: 0 $spacer-s;
   color: $color-major-text;
+  @include breakpoint(large-desktop) {
+    width: 25%;
+  }
+  @include breakpoint(desktop) {
+    width: 25%;
+  }
+  @include breakpoint(small-desktop) {
+    width: 100%;
+  }
   .filter-block-title {
     position: relative;
     font-family: 'Raleway', 'Sans-serif';
@@ -142,4 +151,7 @@
       }
     }
   }
+}
+.filters__range-stock {
+  margin-bottom: $spacer-xxl;
 }

@@ -2,16 +2,14 @@
 
 .main {
   flex: 1 0 auto;
-  padding: 48px 0;
+  padding: $spacer-xxl 0;
 }
 .main__wrapper {
   display: flex;
-    // display: grid;
-    // grid-template-columns: 294px 1fr;
-    // grid-auto-flow: column;
-    // gap: 10px;
+  @include breakpoint(small-desktop) {
+    flex-direction: column;
+  }
 }
-
 .block__wrapper {
   border: 2px solid black;
 }

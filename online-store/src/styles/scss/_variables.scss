@@ -31,7 +31,7 @@ $spacer-xxl: 2 * $spacer-base;
 
 @mixin breakpoint($point) {
   @if $point == large-desktop {
-      @media (max-width: 1400px) {@content;}
+      @media (min-width: 1200.9px) {@content;}
   }
   @if $point == desktop {
       @media (max-width: 1200px) {@content;}
