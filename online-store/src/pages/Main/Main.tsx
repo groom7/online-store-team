@@ -7,7 +7,7 @@ import { getAllProducts } from '../../controllers/getAllProducts';
 import { addSelectOption } from '../../controllers/addSelectOption';
 import Header from '../../components/Header/Header';
 import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
-import {  useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getAllClearProducts } from '../../controllers/getAllClearProducts';
 import Footer from '../../components/Footer/Footer';
 function Main() {
@@ -111,12 +111,12 @@ function Main() {
       setSearchParams({...searchs,Pstock:  inputStockSecond + '↕' + payload})
     }
     if (type === 'display') {
-      if (payload === 'small') {
-        changeDisplayStyle('small');
+      if (payload === 'list-view') {
+        changeDisplayStyle('list-view');
         setDisplayProduct(true);
         setSearchParams({...searchs ,Pdisplay: 'true' })
       } else {
-        changeDisplayStyle('big');
+        changeDisplayStyle('squares-view');
         setDisplayProduct(false);
         setSearchParams({...searchs ,Pdisplay: 'false' })
       }
@@ -151,7 +151,7 @@ function Main() {
     if(Pdisplay !== null) {
       if(Pdisplay === 'true' || Pdisplay === 'false') {
         setDisplayProduct(Pdisplay === 'true' ? true : false)
-        changeDisplayStyle(Pdisplay === 'true' ? 'small' : 'big');
+        changeDisplayStyle(Pdisplay === 'true' ? 'list-view' : 'squares-view');
       }else {
         handleCheckBox('reset', '')
       }
@@ -200,27 +200,29 @@ function Main() {
     <>
       <Header />
       <div className="main">
-        <div className="main__wrapper">
-          <Filters
-            inputPriceSecond={inputPriceSecond}
-            inputStockSecond={inputStockSecond}
-            category={category}
-            brands={brands}
-            handleCheckBox={handleCheckBox}
-            inputStock={inputStock}
-            inputPrice={inputPrice}
-          />
-          {loading ? (
-            <div className='loading'>Loading please wait...</div>
-          ) : (
-            <Products
-              displayProduct={displayProduct}
-              select={select}
-              handleSearch={handleSearch}
-              search={search}
+        <div className="outer-wrapper">
+          <div className="main__wrapper">
+            <Filters
+              inputPriceSecond={inputPriceSecond}
+              inputStockSecond={inputStockSecond}
+              category={category}
+              brands={brands}
               handleCheckBox={handleCheckBox}
+              inputStock={inputStock}
+              inputPrice={inputPrice}
             />
-          )}
+            {loading ? (
+              <div className='loading'>Loading please wait...</div>
+            ) : (
+              <Products
+                displayProduct={displayProduct}
+                select={select}
+                handleSearch={handleSearch}
+                search={search}
+                handleCheckBox={handleCheckBox}
+              />
+            )}
+          </div>
         </div>
       </div>
       <Footer />
