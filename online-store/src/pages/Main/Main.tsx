@@ -48,6 +48,13 @@ function Main() {
     if (type === 'category' && typeof payload === 'string') {
       if (category.includes(payload)) {
         setCategory(category.filter((item) => item !== payload));
+        let arr = Pcategory?.split('↕').filter((item) => item !== payload)
+        if( arr?.join('↕') !== undefined && arr.length !== 0) {
+          setSearchParams({...searchs ,Pcategory: arr.join('↕')})
+        }else {
+          delete searchs.Pcategory
+          setSearchParams({...searchs })
+        }
       } else {
         setCategory(category.concat(payload));
         if(Pcategory !== null) {
@@ -56,10 +63,18 @@ function Main() {
           setSearchParams({...searchs ,Pcategory: payload })
         }
       }
+      
     }
     if (type === 'brands' && typeof payload === 'string') {
       if (brands.includes(payload)) {
         setBrands(brands.filter((item) => item !== payload));
+        let arr = Pbrands?.split('↕').filter((item) => item !== payload)
+       if( arr?.join('↕') !== undefined && arr.length !== 0) {
+          setSearchParams({...searchs ,Pbrands: arr.join('↕')})
+        }else {
+          delete searchs.Pbrands
+          setSearchParams({...searchs })
+        }
       } else {
         setBrands(brands.concat(payload));
         if(Pbrands !== null) {
