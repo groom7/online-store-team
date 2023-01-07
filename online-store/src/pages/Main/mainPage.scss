@@ -1,38 +1,17 @@
+@import '../.././styles/scss/variables';
+
 .main {
   flex: 1 0 auto;
   padding: 48px 0;
 }
 .main__wrapper {
-    display: grid;
-    grid-template-columns: 294px 1fr;
-    grid-auto-flow: column;
-    gap: 10px;
+  display: flex;
+    // display: grid;
+    // grid-template-columns: 294px 1fr;
+    // grid-auto-flow: column;
+    // gap: 10px;
 }
 
-.block__img {
-    max-width: 90px;
-}
 .block__wrapper {
-    border: 2px solid black;
-}
-.filters__categories, .filters__brand {
-    border: 2px solid black;
-}
-.small {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-}
-.big {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-.filter__container{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: 2px solid black;
 }

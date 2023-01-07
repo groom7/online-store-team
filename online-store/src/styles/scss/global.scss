@@ -3,21 +3,19 @@
 
 html {
   font-family: 'Open Sans','Sans-serif';
-  font-weight: 400px;
-  color: #414141;
+  font-weight: 400;
+  color: $color-minor-text;
+  overflow-y: scroll;
 }
-
 html, 
 body {
   height: 100%;
 }
-
 #root {
   display: flex;
 	flex-direction: column;
   min-height: 100%;
 }
-
 *, *::before, *::after {
   padding: 0;
   margin: 0;
@@ -25,39 +23,50 @@ body {
   box-sizing: border-box;
   list-style: none;
 }
-
+a {
+  text-decoration: none;
+}
 .hoverOpacity:hover {
   opacity: 0.6;
 }
-
 .hoverOrange:hover {
   filter: invert(40%) sepia(90%) saturate(1000%);
 }
-
-button {
+.hoverBgcOrange:hover {
+  color: #fff;
+  background-color: #ff7004;
+  border: 1px solid $color-orange;
+}
+.button {
+  font-size: $font-small;
   cursor: pointer;
   transition: ease all 0.3s;
 }
-
-.outer-wrapper {
-  width: 100%;
-  max-width: 1340px;
-  margin: 0 auto;
-}
-
 .input {
   height: 45px;
   padding: 0 10px;
   font-size: $font-small;
   &::-webkit-input-placeholder {
     font-size: $font-small;
-    color: #212121;
+    color: $color-minor-text;
   }
   &:hover {
     background-color: #fafafa;
   }
 }
-
+.select {
+  height: 24px;
+  cursor: pointer;
+  display: block;
+  background: none;
+  border: 1px solid #ccc;
+  font-size: $font-small;
+}
+.outer-wrapper {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+}
 .start-shopping-button {
   width: 260px;
   font-size: $font-small;
