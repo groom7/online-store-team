@@ -5,9 +5,9 @@ function Footer() {
   return (
     <footer>
       <div className='outer-wrapper'>
-        <div className="github-block">
+        <div className="github-block" data-testid='github-block'>
           <a className="image-link github-block__link" href="https://github.com/groom7">
-            <img className="github-block__logo hoverOpacity" src={githubLogo} alt="github logo" />
+            <img className="github-block__logo hoverOpacity" src={githubLogo} alt="github logo"/>
           </a>
         </div>
         <div className="github-block">

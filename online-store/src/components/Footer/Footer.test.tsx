@@ -1,13 +1,13 @@
 import { render, screen, fireEvent  } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Header from './Header';
+import Footer from './Footer';
 
 test('renders header element', () => {
   render(
     <BrowserRouter>
-      <Header />
+      <Footer />
     </BrowserRouter>
   );
-  const cartPageLink = screen.getByTestId('header__cart');
-  expect(cartPageLink).toBeInTheDocument();
+  const githubLink = screen.getByTestId('github-block');
+  expect(githubLink).toBeInTheDocument();
 });
