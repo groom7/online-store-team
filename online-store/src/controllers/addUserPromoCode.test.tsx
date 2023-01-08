@@ -1,4 +1,3 @@
-import { itemData } from "../store/constants";
 import { store } from "../store/store";
 import { addUserPromoCode } from "./addUserPromoCode";
 
