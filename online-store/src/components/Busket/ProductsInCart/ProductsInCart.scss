@@ -1,13 +1,26 @@
 @import '../../../styles/scss/variables';
 
 .products-list {
-  max-width: 800px;
+  @include breakpoint(large-desktop) {
+    width: 75%;
+    margin: 0 $spacer-s;
+  }
+  @include breakpoint(desktop) {
+    margin: 0 $spacer-s $spacer-m;
+  }
   border: 1px solid #ebebeb;
   .products-list__header {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 20px;
     padding: 20px 16px 20px;
     border-bottom: 1px solid #ebebeb;
+    @include breakpoint(small-desktop) {
+      gap: $spacer-xs;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .cart-title-container {
     display: flex;
@@ -18,17 +31,24 @@
     font-weight: 600;
   }
   .pagination-control {
-    width: 70%;
     display: flex;
     flex: 2;
     justify-content: space-between;
     align-items: flex-end;
+    gap: $spacer-xs;
     font-size: $font-small;
+    @include breakpoint(small-desktop) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     .pages-numbers {
-      min-width: 270px;
       display: flex;
       align-items: flex-end;
       margin-left: auto;
+      @include breakpoint(small-desktop) {
+        margin: 0 auto;
+      }
       :first-child {
         padding-right: 5px;
       }

@@ -1,11 +1,19 @@
 @import '../../../styles/scss/variables';
 
 .summary {
-  width: 300px;
+  max-width: 350px;
+  @include breakpoint(large-desktop) {
+    width: 25%;
+  }
+  @include breakpoint(desktop) {
+    width: 95%;
+    margin: 0 $spacer-s;
+  }
   height: 415px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  margin: 0 $spacer-s;
+  padding: $spacer-s;
   background-color: #ebebeb;
 }
 .summary__title-wrapper {

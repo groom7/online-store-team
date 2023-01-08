@@ -23,13 +23,23 @@ function ProductCard(
     <div className='product-card'>
       <div className='list-number'>{props.listNumber}</div>
       <Link className='item-details-page-link' to={`/product-details/${props.productData.id}`}>
-        <figure className='product-image-wrapper'>
+        {/* <figure className='product-image-wrapper'>
           <img
             src={props.productData.thumbnail}
             className='product-image'
             alt={props.productData.title}
           />
-        </figure>
+        </figure> */}
+        <div className="item-image__wrapper">
+          <div className="item-image__helper">
+            <img
+              loading='lazy'
+              className='item-image__img'
+              src={props.productData.thumbnail}
+              alt="item thumbnail"
+            />
+          </div>
+        </div>
       </Link>
       <Link className='item-details-page-link' to={`/product-details/${props.productData.id}`}>
         <ul className='product-card__info'>

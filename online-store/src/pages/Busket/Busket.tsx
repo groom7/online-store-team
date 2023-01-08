@@ -14,13 +14,17 @@ function Busket({modalActive, setModalActive}: BusketProps) {
     <>
       <Header />
       <section className='cart-container'>
-        { storeState.state.busket.cartTotalCount === 0 
-        ? <EmptyCart /> 
-        : <Fragment>
-          <ProductsInCart />
-          <Summary modalActive={modalActive} setModalActive={setModalActive} />
-        </Fragment>
-        }
+        <div className="outer-wrapper">
+          <div className="cart-wrapper">
+            { storeState.state.busket.cartTotalCount === 0 
+            ? <EmptyCart /> 
+            : <Fragment>
+              <ProductsInCart />
+              <Summary modalActive={modalActive} setModalActive={setModalActive} />
+            </Fragment>
+            }
+          </div>
+        </div>
       </section>
       <Footer />
     </>
