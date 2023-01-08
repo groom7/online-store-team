@@ -10,8 +10,8 @@ import { changeDisplayStyle } from '../../controllers/changeDisplayStyle';
 import { useSearchParams } from 'react-router-dom';
 import { getAllClearProducts } from '../../controllers/getAllClearProducts';
 import Footer from '../../components/Footer/Footer';
-function Main() {
-  const [loading, setLoading] = useState(true);
+import { MainProps } from '../../types/Response';
+function Main({loading}: MainProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const Pcategory = searchParams.get('Pcategory')
   const Pbrands = searchParams.get('Pbrands')
@@ -127,15 +127,8 @@ function Main() {
     addFilters('search', searchValue);
     setSearchParams({...searchs ,Psearch: searchValue })
   };
-  const setProduct = () => {
-    getAllProducts().length === 0 ? setProduct() : setLoading(false);
-  };
+  
   useEffect(() => {
-    if(getAllClearProducts().length !== 100 && getAllProducts().length !== 0) {
-      setProduct()
-    }else {
-      setLoading(false)
-    }
     if(Pbrands !== null && brands.length === 0) {
       Pbrands.split("↕").forEach((item) => {
         addFilters('brands', item);
@@ -184,7 +177,7 @@ function Main() {
       setSearch(Psearch)
       addFilters('search', Psearch);
     }
-  }, [Pbrands, Pcategory, Pstock, Pprice, Psort, Pdisplay, Psearch]);
+  }, [Pbrands, Pcategory, Pprice, Psort, Pdisplay, Psearch]);
 
   const [category, setCategory] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
@@ -211,17 +204,14 @@ function Main() {
               inputStock={inputStock}
               inputPrice={inputPrice}
             />
-            {loading ? (
-              <div className='loading'>Loading please wait...</div>
-            ) : (
-              <Products
+           <Products
+                loading={loading}
                 displayProduct={displayProduct}
                 select={select}
                 handleSearch={handleSearch}
                 search={search}
                 handleCheckBox={handleCheckBox}
               />
-            )}
           </div>
         </div>
       </div>

@@ -13,3 +13,5 @@ export const busketDefaultState = JSON.stringify({
   totalDiscounAmount: 0,
   cartGrandTotal: 0
 });
+export const productsLength = 100
+export const productsIncrements = 20
