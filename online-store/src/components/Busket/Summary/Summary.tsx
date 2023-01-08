@@ -29,8 +29,6 @@ function Summary({modalActive, setModalActive}: BusketProps) {
     }
   };
   
-  
-  
   return (
     <>
       <div className='summary'>
