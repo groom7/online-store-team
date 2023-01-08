@@ -1,13 +1,13 @@
 import { render, screen, fireEvent  } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Footer from './Footer';
+import NotFoundComponent from './NotFoundComponent';
 
 test('renders header element', () => {
   render(
     <BrowserRouter>
-      <Footer />
+      <NotFoundComponent />
     </BrowserRouter>
   );
-  const githubLink = screen.getByTestId('github-block');
-  expect(githubLink).toBeInTheDocument();
+  const startShoppingButton = screen.getByTestId('start-shopping-button');
+  expect(startShoppingButton).toBeInTheDocument();
 });
