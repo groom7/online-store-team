@@ -36,12 +36,9 @@
     font-weight: 600;
     color: $color-major-text;
   }
-  .product-description {
-    font-size: $font-small;
-  }
-  .product-rating {
-    font-size: $font-small;
-  }
+  .product-description,
+  .product-category,
+  .product-rating,
   .product-discount {
     font-size: $font-small;
   }

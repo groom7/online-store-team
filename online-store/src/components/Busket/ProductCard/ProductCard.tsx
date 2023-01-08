@@ -31,6 +31,7 @@ function ProductCard(
       <ul className='product-card__info'>
         <li className='product-title'>{props.productData.brand} {props.productData.title}</li>
         <li className='product-description'>{props.productData.description}</li>
+        <li className='product-category'>Category: {props.productData.category}</li>
         <li className='product-rating'>Rating: {props.productData.rating}</li>
         <li className='product-discount'>Discount: {props.productData.discountPercentage}%</li>
       </ul>
