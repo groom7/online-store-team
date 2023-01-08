@@ -33,8 +33,11 @@
     justify-content: flex-start;
   }
   .product-title {
-    font-weight: 600;
+    font-weight: 500;
     color: $color-major-text;
+    &:hover {
+      font-weight: 700;
+    }
   }
   .product-description,
   .product-category,
