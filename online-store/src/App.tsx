@@ -1,6 +1,5 @@
 import { useEffect, useState, createContext } from 'react';
 import { addToBusket } from './controllers/addToBusket';
-import { getAllProducts } from './controllers/getAllProducts';
 import { removeFromBusket } from './controllers/removeFromBusket';
 import { setProducts } from './controllers/setProducts';
 import Busket from './pages/Busket/Busket';
@@ -12,6 +11,7 @@ import { removeUserPromoCode } from './controllers/removeUserPromoCode';
 import { addUserPromoCode } from './controllers/addUserPromoCode';
 import NotFound from './pages/NotFound/NotFound';
 import Details from './pages/Details/Details';
+import { getAllClearProducts } from './controllers/getAllClearProducts';
 
 export const StoreStateContext = createContext<StoreContext>({
   storeState: store,
@@ -58,7 +58,7 @@ function App() {
         setProducts(product.products);
       });
     }).then(() => {
-      getAllProducts().length === 0 ? setProduct() : setLoading(false)
+      getAllClearProducts().length === 0 ? setProduct() : setLoading(false)
     }).catch((err) => {
       if(err) {
         return err
@@ -78,7 +78,7 @@ function App() {
         applyUserPromoCode,
       }}>
       <Routes>
-        <Route path='/' element={<Main />}/>
+        <Route path='/' element={<Main loading={loading}/>}/>
         <Route path='/busket/' element={<Busket modalActive={modalActive} setModalActive={setModalActive} />} />
         <Route path='/product-details/:id' element={<Details  setModalActive={setModalActive} loading={loading}/>} />
         <Route path='*' element={<NotFound />} />

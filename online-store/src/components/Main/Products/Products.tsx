@@ -7,9 +7,11 @@ import { isItemInCart } from '../../../controllers/isItemInCart';
 import './product.scss'
 import squaresIcon from '../../../assets/images/squares.png'
 import listIcon from '../../../assets/images/list.png'
+import { useInfiniteScroll } from '../../../customHooks/useInfiniteScroll';
 
-const Products = ({displayProduct,select,handleSearch,search, handleCheckBox}: IPropsProduct) => {
+const Products = ({displayProduct,select,handleSearch,search, handleCheckBox, loading}: IPropsProduct) => {
 const {setCartProduct, removeCartProduct} = useContext(StoreStateContext)
+const count = useInfiniteScroll()
   return (
     <div className='product__wrapper'>
       <div className='filter__container'>
@@ -37,15 +39,15 @@ const {setCartProduct, removeCartProduct} = useContext(StoreStateContext)
           </button>
           </div>
       </div>
-      <div className={`item-card-container ${displayProduct ? 'list-view' : 'squares-view'}`}>
+      {loading ? <div className='product-not-found'></div> : <div className={`item-card-container ${displayProduct ? 'list-view' : 'squares-view'}`}>
         {getAllProducts().length === 0 
-          ? <div className='product-not-found'></div> 
-          : getAllProducts().map((item, i) => (
+          ? <div>Product not found</div> 
+          : getAllProducts().slice(0, count).map((item, i) => (
           <div className={`item-card-container__item-card ${displayProduct ? 'item-card-list-view' : 'item-card-squares-view'}`} key={item.title}>
             <Link className='item-details-page-link' to={`product-details/${item.id}`}>
               <div className="item-image__wrapper">
                 <div className="item-image__helper">
-                  <img className='item-image__img' src={item.images[0]} alt="" />
+                  <img loading='lazy' className='item-image__img' src={item.images[0]} alt="" />
                 </div>
               </div>
             </Link>
@@ -65,7 +67,7 @@ const {setCartProduct, removeCartProduct} = useContext(StoreStateContext)
             }
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   );
 }
