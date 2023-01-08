@@ -35,3 +35,6 @@ export const itemData: Response = {
     "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
   ]
 };
+
+export const productsLength = 100
+export const productsIncrements = 20

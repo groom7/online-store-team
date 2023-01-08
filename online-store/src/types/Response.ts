@@ -91,7 +91,8 @@ export interface IPropsProduct {
   handleSearch(searchValue: string) : void,
   search: string,
     handleCheckBox(type: string, payload: string | number) : void
-}
+    loading: boolean
+  }
 export interface IPropsFilters {
   inputStockSecond: number,
   inputPriceSecond: number,

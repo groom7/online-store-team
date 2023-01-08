@@ -60,7 +60,7 @@ function Filters({inputPriceSecond,inputStockSecond,inputPrice, inputStock ,cate
       <div className="filters__range">
         <div className="filters__range-price">
         <h4 className='filter-price-subtitle'>Price</h4>
-        <span className='filter-range-value'>{inputPrice} ⟷ {inputPriceSecond}</span>
+        <span className='filter-range-value'>{Math.min(inputPrice, inputPriceSecond)} ⟷ {Math.max(inputPrice, inputPriceSecond)}</span>
           <div className="filters__range-wrapper">
             <input className="filters__range-min" onChange={(e) => {handleCheckBox('price',+e.target.value)}} min={10} max={1749} value={inputPrice} type="range" name="" id="" />
             <input className="filters__range-max" onChange={(e) => {handleCheckBox('price-2',+e.target.value)}} min={10} max={1749} value={inputPriceSecond} type="range" name="" id="" />
@@ -68,7 +68,7 @@ function Filters({inputPriceSecond,inputStockSecond,inputPrice, inputStock ,cate
         </div>
         <div className="filters__range-stock">
           <h4 className='filter-stock-subtitle'>Stock</h4>
-          <span className='filter-range-value'>{inputStock} ⟷ {inputStockSecond}</span>
+          <span className='filter-range-value'>{Math.min(inputStock, inputStockSecond)} ⟷ {Math.max(inputStock, inputStockSecond)}</span>
           <div className="filters__range-wrapper">
             <input className="filters__range-min" onChange={(e) => {handleCheckBox('stock',+e.target.value)}} max={150} min={2} value={inputStock} type="range" name="" id="" />
             <input className="filters__range-max" onChange={(e) => {handleCheckBox('stock-2',+e.target.value)}} min={2} max={150} value={inputStockSecond} type="range" name="" id="" />
