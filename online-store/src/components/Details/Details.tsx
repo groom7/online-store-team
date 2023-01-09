@@ -36,7 +36,6 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   setUniqPicture(Object.values(ImageDataObject))
  })
 }
-  }
 
   const [whatDisplay, setWhatDisplay] = useState('details')
   const [currentImg, setCurrentImg] = useState('')
