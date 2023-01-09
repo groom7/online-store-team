@@ -68,7 +68,7 @@ export const store: Store = {
       }
     if (filters.search !== '') {
       array = array.filter((item) =>
-        item.title.toLowerCase().includes(filters.search) || item.description.toLowerCase().includes(filters.search) || item.brand.toLowerCase().includes(filters.search) || item.category.toLowerCase().includes(filters.search)
+        item.title.toLowerCase().includes(filters.search.toLowerCase()) || item.description.toLowerCase().includes(filters.search.toLowerCase()) || item.brand.toLowerCase().includes(filters.search.toLowerCase()) || item.category.toLowerCase().includes(filters.search.toLowerCase())
       );
     }
     if (filters.sortBy !== '') {
