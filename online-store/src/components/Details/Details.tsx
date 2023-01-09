@@ -21,7 +21,9 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
       }
     }else if(currentId === 10) {
       if(getProductById(currentId).images.length !== 3) {
-        return getProductById(currentId).images.splice(1, 3)
+        let res = getProductById(currentId).images
+         res.splice(0, 1)
+         return res
       }else {
         return getProductById(currentId).images
       }
