@@ -13,11 +13,11 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
  async function getImageSizeInBytes(imgURL: string) {
-    var request =  new XMLHttpRequest();
+    const request =  new XMLHttpRequest();
     request.open("HEAD", imgURL, false);
     request.send(null);
-    var headerText = request.getAllResponseHeaders();
-    var re = /Content\-Length\s*:\s*(\d+)/i;
+    const headerText = request.getAllResponseHeaders();
+    const re = /Content\-Length\s*:\s*(\d+)/i;
     re.exec(headerText);
     return parseInt(RegExp.$1);
 }
