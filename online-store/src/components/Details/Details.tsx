@@ -14,15 +14,15 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const uniqPict = () => {
     if(currentId === 1) {
       if(getProductById(currentId).images.length !== 3) {
-       return getProductById(currentId).images.splice(0, 2)
+        return getProductById(currentId).images.splice(0, 2)
       }else {
-       return getProductById(currentId).images
+        return getProductById(currentId).images
       }
     }else if(currentId === 10) {
       if(getProductById(currentId).images.length !== 3) {
         let res = getProductById(currentId).images
-         res.splice(0, 1)
-         return res
+          res.splice(0, 1)
+          return res
       }else {
         return getProductById(currentId).images
       }
@@ -38,8 +38,8 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
       return getProductById(currentId).images
     }
   }
- const [whatDisplay, setWhatDisplay] = useState('details')
- const [currentImg, setCurrentImg] = useState('')
+  const [whatDisplay, setWhatDisplay] = useState('details')
+  const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
     if((currentId <= 0 || currentId > 100) || isNaN(currentId) ) {
       navigate('/404')
@@ -86,7 +86,18 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
                   </div>
                   <div className='details__wrapper-left-bottom'>
                     {uniqPict().map((item) => (
-                      <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__items-img' src={item} alt="" /></div>
+                      <div key={item} onClick={() => {setCurrentImg(item)}}>
+                        <div className="details__item-image-wrapper">
+                          <div className="details__item-image-helper">
+                            <img
+                              loading='lazy'
+                              className='details__item-image-img'
+                              src={item}
+                              alt="item thumbnail"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
