@@ -9,35 +9,35 @@ import { DetailsProps } from '../../types/Response'
 
 function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const navigate = useNavigate();
+  const [uniqPicture, setUniqPicture] = useState<string[]>([])
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
-  const uniqPict = () => {
-    if(currentId === 1) {
-      if(getProductById(currentId).images.length !== 3) {
-        return getProductById(currentId).images.splice(0, 2)
-      }else {
-        return getProductById(currentId).images
-      }
-    }else if(currentId === 10) {
-      if(getProductById(currentId).images.length !== 3) {
-        let res = getProductById(currentId).images
-          res.splice(0, 1)
-          return res
-      }else {
-        return getProductById(currentId).images
-      }
-    }else if(currentId === 20) {
-      if(getProductById(currentId).images.length !== 4) {
-        let res = getProductById(currentId).images
-        res.splice(2, 1)
-        return res
-      }else {
-        return getProductById(currentId).images
-      }
+ async function getImageSizeInBytes(imgURL: string) {
+    var request =  new XMLHttpRequest();
+    request.open("HEAD", imgURL, false);
+    request.send(null);
+    var headerText = request.getAllResponseHeaders();
+    var re = /Content\-Length\s*:\s*(\d+)/i;
+    re.exec(headerText);
+    return parseInt(RegExp.$1);
+}
+ const getUniqPictures = async () => {
+  let res = getProductById(currentId).images.map((item) => {
+   return getImageSizeInBytes(item).then(data => ({[data]: item}))
+  })
+ Promise.all(res).then(data => {
+  let ImageDataObject: {[key : string]: string} = {}
+  data.forEach((item) => {
+    if(ImageDataObject.hasOwnProperty(Object.keys(item)[0])) {
     }else {
-      return getProductById(currentId).images
+      ImageDataObject[Object.keys(item)[0]] = item[+Object.keys(item)[0]]
     }
+  })
+  setUniqPicture(Object.values(ImageDataObject))
+ })
+}
   }
+
   const [whatDisplay, setWhatDisplay] = useState('details')
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
@@ -46,14 +46,23 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
     }
   }, []);
   useEffect(() => {
+
     if (!loading) {
       setCurrentImg(getProductById(currentId).images[0]);
     }
   }, [loading, currentId]);
+
+  useEffect(() => {
+   if(uniqPicture.length === 0) {
+    getUniqPictures()
+   }
+  },)
+
   const linkHandler = () => {
     !isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()
     setModalActive(true)
   }
+
   return (
   <>
     {loading ? <div>Loading...</div>
@@ -85,7 +94,8 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
                     </div>
                   </div>
                   <div className='details__wrapper-left-bottom'>
-                    {uniqPict().map((item) => (
+                    {uniqPicture.map((item) => (
+
                       <div key={item} onClick={() => {setCurrentImg(item)}}>
                         <div className="details__item-image-wrapper">
                           <div className="details__item-image-helper">
@@ -150,7 +160,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
                     : ''}`} onClick={() => {setWhatDisplay('details')}
                   }
                 >
-                  Details
+                  Description
                 </div>
               </div>
               <div className="details__product-product-details">
