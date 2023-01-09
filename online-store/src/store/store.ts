@@ -14,7 +14,7 @@ export const store: Store = {
       stockSecond: null,
       search: '',
       sortBy: '',
-      displayActive: false, // false - big, true - small
+      displayActive: false, // false - squares-view, true - list-view
     },
   },
   setProducts(array) {
@@ -37,7 +37,7 @@ export const store: Store = {
     return false;
   },
   changeDisplayStyle(type) {
-    if (type === 'small') {
+    if (type === 'list-view') {
       this.state.filters.displayActive = true;
     } else {
       this.state.filters.displayActive = false;
