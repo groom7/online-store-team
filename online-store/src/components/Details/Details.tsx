@@ -36,6 +36,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   setUniqPicture(Object.values(ImageDataObject))
  })
 }
+  }
 
   const [whatDisplay, setWhatDisplay] = useState('details')
   const [currentImg, setCurrentImg] = useState('')
@@ -43,15 +44,20 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
     if((currentId <= 0 || currentId > 100) || isNaN(currentId) ) {
       navigate('/404')
     }
+  }, []);
+  useEffect(() => {
+
     if (!loading) {
       setCurrentImg(getProductById(currentId).images[0]);
     }
   }, [loading, currentId]);
+
   useEffect(() => {
    if(uniqPicture.length === 0) {
     getUniqPictures()
    }
   },)
+
   const linkHandler = () => {
     !isItemInCart(getProductById(currentId)) ? addToBusket(getProductById(currentId)) : console.log()
     setModalActive(true)
@@ -89,6 +95,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
                   </div>
                   <div className='details__wrapper-left-bottom'>
                     {uniqPicture.map((item) => (
+
                       <div key={item} onClick={() => {setCurrentImg(item)}}>
                         <div className="details__item-image-wrapper">
                           <div className="details__item-image-helper">

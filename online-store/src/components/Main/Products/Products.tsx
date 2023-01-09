@@ -47,7 +47,7 @@ const count = useInfiniteScroll()
             <Link className='item-details-page-link' to={`product-details/${item.id}`}>
               <div className="item-image__wrapper">
                 <div className="item-image__helper">
-                  <img loading='lazy' className='item-image__img' src={item.images[0]} alt="" />
+                  <img loading='lazy' className='item-image__img' src={item.images[0]} alt="item thumbnail" />
                 </div>
               </div>
             </Link>
