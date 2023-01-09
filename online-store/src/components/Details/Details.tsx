@@ -10,9 +10,36 @@ import { DetailsProps } from '../../types/Response'
 function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const navigate = useNavigate();
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
-  const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1]);
-  const [whatDisplay, setWhatDisplay] = useState('details');
-  const [currentImg, setCurrentImg] = useState(' ');
+  const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
+  const uniqPict = () => {
+    if(currentId === 1) {
+      if(getProductById(currentId).images.length !== 3) {
+       return getProductById(currentId).images.splice(0, 2)
+      }else {
+       return getProductById(currentId).images
+      }
+    }else if(currentId === 10) {
+      if(getProductById(currentId).images.length !== 3) {
+        let res = getProductById(currentId).images
+         res.splice(0, 1)
+         return res
+      }else {
+        return getProductById(currentId).images
+      }
+    }else if(currentId === 20) {
+      if(getProductById(currentId).images.length !== 4) {
+        let res = getProductById(currentId).images
+        res.splice(2, 1)
+        return res
+      }else {
+        return getProductById(currentId).images
+      }
+    }else {
+      return getProductById(currentId).images
+    }
+  }
+ const [whatDisplay, setWhatDisplay] = useState('details')
+ const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
     if((currentId <= 0 || currentId > 100) || isNaN(currentId) ) {
       navigate('/404')
@@ -58,25 +85,9 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
                     </div>
                   </div>
                   <div className='details__wrapper-left-bottom'>
-                    {Array.from(
-                      new Set(currentId === 1
-                        ? (getProductById(currentId).images.length !== 3 ? getProductById(currentId).images.splice(0, 2)
-                        : getProductById(currentId).images) : getProductById(currentId).images))
-                          .map((item) => (
-                            <div key={item} onClick={() => {setCurrentImg(item)}}>
-                              <div className="details__item-image-wrapper">
-                                <div className="details__item-image-helper">
-                                  <img
-                                    loading='lazy'
-                                    className='details__item-image-img'
-                                    src={item}
-                                    alt="item thumbnail"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          ))
-                    }
+                    {uniqPict().map((item) => (
+                      <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__items-img' src={item} alt="" /></div>
+                    ))}
                   </div>
                 </div>
                 <div className="details__wrapper-right">
