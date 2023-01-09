@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import './ProductCard.scss';
 import { Response } from '../../../types/Response';
 import { StoreStateContext } from '../../../App';
+import { Link } from 'react-router-dom';
 
 function ProductCard(
   props: {
@@ -21,19 +22,27 @@ function ProductCard(
   return (
     <div className='product-card'>
       <div className='list-number'>{props.listNumber}</div>
-      <figure className='product-image-wrapper'>
-        <img
-          src={props.productData.thumbnail}
-          className='product-image'
-          alt={props.productData.title}
-        />
-      </figure>
-      <ul className='product-card__info'>
-        <li className='product-title'>{props.productData.brand} {props.productData.title}</li>
-        <li className='product-description'>{props.productData.description}</li>
-        <li className='product-rating'>Rating: {props.productData.rating}</li>
-        <li className='product-discount'>Discount: {props.productData.discountPercentage}%</li>
-      </ul>
+      <Link className='item-details-page-link' to={`/product-details/${props.productData.id}`}>
+        <div className="item-image__wrapper">
+          <div className="item-image__helper">
+            <img
+              loading='lazy'
+              className='item-image__img'
+              src={props.productData.thumbnail}
+              alt="item thumbnail"
+            />
+          </div>
+        </div>
+      </Link>
+      <Link className='item-details-page-link' to={`/product-details/${props.productData.id}`}>
+        <ul className='product-card__info'>
+          <li className='product-title'>{props.productData.brand} {props.productData.title}</li>
+          <li className='product-description'>{props.productData.description}</li>
+          <li className='product-category'>Category: {props.productData.category}</li>
+          <li className='product-rating'>Rating: {props.productData.rating}</li>
+          <li className='product-discount'>Discount: {props.productData.discountPercentage}%</li>
+        </ul>
+      </Link>
       <ul className='quantity'>
         <li className='in-stock'>Available: { props.productData.stock } pcs</li>
         <li className='quantity-control'>

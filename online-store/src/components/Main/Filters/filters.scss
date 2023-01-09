@@ -1,8 +1,6 @@
 @import '../../../styles/scss/variables';
 
 .filters__wrapper {
-  padding: 0 $spacer-s;
-  color: $color-major-text;
   @include breakpoint(large-desktop) {
     width: 25%;
   }
@@ -12,6 +10,8 @@
   @include breakpoint(small-desktop) {
     width: 100%;
   }
+  padding: 0 $spacer-s;
+  color: $color-major-text;
   .filter-block-title {
     position: relative;
     font-family: 'Raleway', 'Sans-serif';
