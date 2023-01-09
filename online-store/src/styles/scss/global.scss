@@ -122,9 +122,6 @@ a {
       max-height: 100%;
       object-fit: contain;
       transition: ease-out all 0.3s;
-      &:hover {
-        transform: scale(150%);
-      }
     }
   }
 }
