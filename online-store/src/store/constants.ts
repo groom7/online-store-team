@@ -36,5 +36,7 @@ export const itemData: Response = {
   ]
 };
 
+export const selectOption = 'Sort by price ASC'
+
 export const productsLength = 100
 export const productsIncrements = 20

@@ -12,6 +12,31 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const navigate = useNavigate()
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
+  const uniqPict = () => {
+    if(currentId === 1) {
+      if(getProductById(currentId).images.length !== 3) {
+       return getProductById(currentId).images.splice(0, 2)
+      }else {
+       return getProductById(currentId).images
+      }
+    }else if(currentId === 10) {
+      if(getProductById(currentId).images.length !== 3) {
+        return getProductById(currentId).images.splice(1, 3)
+      }else {
+        return getProductById(currentId).images
+      }
+    }else if(currentId === 20) {
+      if(getProductById(currentId).images.length !== 4) {
+        let res = getProductById(currentId).images
+        res.splice(2, 1)
+        return res
+      }else {
+        return getProductById(currentId).images
+      }
+    }else {
+      return getProductById(currentId).images
+    }
+  }
  const [whatDisplay, setWhatDisplay] = useState('details')
   const [currentImg, setCurrentImg] = useState('')
   useEffect(() => {
@@ -46,7 +71,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
             <img src={currentImg} className='details__item-img' alt="" />
       </div>
     <div className='details__wrapper-left-bottom'>
-          {Array.from(new Set(currentId === 1 ? (getProductById(currentId).images.length !== 3 ? getProductById(currentId).images.splice(0, 2) : getProductById(currentId).images) : getProductById(currentId).images)).map((item) => (
+          {uniqPict().map((item) => (
             <div key={item} onClick={() => {setCurrentImg(item)}}><img className='details__items-img' src={item} alt="" /></div>
           ))}
       </div>
