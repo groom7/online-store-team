@@ -14,27 +14,43 @@ function ProductsInCart() {
   let actualProductsPerPageValue = 3;
   const [currentPageState, setCurrentPageState] = useState(actualCurrentPage);
   const [productsPerPageState, setProductsPerPageState] = useState(actualProductsPerPageValue);
+  const productsPagesCount = Math.ceil(storeState.state.busket.cartTotalCards / productsPerPageState);
+  const pagesNumbers = createPagesNumbers(productsPagesCount, currentPageState);
+  const handlePerPageValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const productsPerPageValue = event.target.value;
+    
+    if ((/^[1-9][0-9]*$/).test(productsPerPageValue)) {
+      setProductsPerPageState(+productsPerPageValue);
+    }
+  };
+  const handleCurrenPageCLick = (pageNumber: number) => {
+    setCurrentPageState(pageNumber);
+  };
+  const productsOnPage = Object.values(storeState.state.busket.cartProductsData)
+    .slice(
+      (currentPageState - 1) * productsPerPageState,
+      (currentPageState - 1) * productsPerPageState + productsPerPageState);
+  
   useEffect(() => {
+    const searchParamCurrentPage = searchParams.get('currentPage');
+    const searchParamProductsPerPage = searchParams.get('productsPerPage');
+    
     for(const key of searchParams.keys()) {
       if (String(key) !== 'productsPerPage' || String(key) !== 'currentPage') {
         setSearchParams({});
         break;
       }
     }
-    const searchParamCurrentPage = searchParams.get('currentPage');
     if (searchParamCurrentPage && +searchParamCurrentPage > 0) {
       actualCurrentPage = +searchParamCurrentPage;
       setCurrentPageState(actualCurrentPage);
     }
-    const searchParamProductsPerPage = searchParams.get('productsPerPage');
     if (searchParamProductsPerPage && +searchParamProductsPerPage > 0) {
       actualProductsPerPageValue = +searchParamProductsPerPage;
       setProductsPerPageState(actualProductsPerPageValue);
     }
-    
     isGetSearchParams.current = true;
   }, []);
-  
   useEffect(() => {
     if (!isGetSearchParams.current) {
       searchParams.set('currentPage', String(currentPageState));
@@ -43,22 +59,6 @@ function ProductsInCart() {
     }
     isGetSearchParams.current = false;
   }, [currentPageState, productsPerPageState]);
-  const productsPagesCount = Math.ceil(storeState.state.busket.cartTotalCards / productsPerPageState);
-  const pagesNumbers = createPagesNumbers(productsPagesCount, currentPageState);
-  const handlePerPageValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const productsPerPageValue = event.target.value;
-    if ((/^[1-9][0-9]*$/).test(productsPerPageValue)) {
-      setProductsPerPageState(+productsPerPageValue);
-    }
-  }
-  const handleCurrenPageCLick = (pageNumber: number) => {
-    setCurrentPageState(pageNumber);
-  };
-  const productsOnPage = Object.values(storeState.state.busket.cartProductsData)
-    .slice(
-      (currentPageState - 1) * productsPerPageState,
-      (currentPageState - 1) * productsPerPageState + productsPerPageState
-    );
   if (productsOnPage.length === 0 ) {
     setCurrentPageState(currentPageState - 1);
   }
