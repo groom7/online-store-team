@@ -150,8 +150,9 @@ const navigate = useNavigate();
 const submitClickHandler = () => {
   clearCart();
   setOrderPlaced(true);
-    setTimeout(() => {
+    const redirectDelayTimer = setTimeout(() => {
       navigate('/');
+      clearTimeout(redirectDelayTimer);
     }, 2000)
 };
 
