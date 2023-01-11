@@ -15,7 +15,7 @@ function ProductsInCart() {
   const [currentPageState, setCurrentPageState] = useState(actualCurrentPage);
   const [productsPerPageState, setProductsPerPageState] = useState(actualProductsPerPageValue);
   useEffect(() => {
-    for(var key of searchParams.keys()) {
+    for(const key of searchParams.keys()) {
       if (String(key) !== 'productsPerPage' || String(key) !== 'currentPage') {
         setSearchParams({});
         break;
