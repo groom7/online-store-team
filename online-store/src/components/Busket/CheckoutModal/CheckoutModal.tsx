@@ -153,6 +153,7 @@ const submitClickHandler = () => {
     const redirectDelayTimer = setTimeout(() => {
       navigate('/');
       clearTimeout(redirectDelayTimer);
+      setActive(false);
     }, 2000)
 };
 
