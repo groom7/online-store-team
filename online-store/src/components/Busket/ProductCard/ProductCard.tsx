@@ -1,16 +1,10 @@
 import { useContext } from 'react'
 import './ProductCard.scss';
-import { Response } from '../../../types/Response';
+import { ProductCardProps, Response } from '../../../types/Response';
 import { StoreStateContext } from '../../../App';
 import { Link } from 'react-router-dom';
 
-function ProductCard(
-  props: {
-    productData: Response,
-    groupTotalPrice: number,
-    groupTotalCount: number 
-    listNumber: number,
-  } ) {
+function ProductCard(props: ProductCardProps) {
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   const handleProductIncrease = () => {
     if (props.groupTotalCount < props.productData.stock) {
