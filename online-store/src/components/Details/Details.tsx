@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getProductById } from '../../controllers/getProductById'
 import { addToBusket } from '../../controllers/addToBusket'
 import './Details.scss'
@@ -11,7 +11,8 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const navigate = useNavigate();
   const [uniqPicture, setUniqPicture] = useState<string[]>([])
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
-  const currentId = +(window.location.href.split('/')[window.location.href.split('/').length - 1])
+  let { id } = useParams()
+  const currentId = id !== undefined ? +id : +(window.location.href.split('/')[window.location.href.split('/').length - 1])
  async function getImageSizeInBytes(imgURL: string) {
     const request =  new XMLHttpRequest();
     request.open("HEAD", imgURL, false);
@@ -28,9 +29,10 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
  Promise.all(res).then(data => {
   let ImageDataObject: {[key : string]: string} = {}
   data.forEach((item) => {
-    if(ImageDataObject.hasOwnProperty(Object.keys(item)[0])) {
+    let keys = Object.keys(item)[0]
+    if(ImageDataObject.hasOwnProperty(keys)) {
     }else {
-      ImageDataObject[Object.keys(item)[0]] = item[+Object.keys(item)[0]]
+      ImageDataObject[keys] = item[+keys]
     }
   })
   setUniqPicture(Object.values(ImageDataObject))
