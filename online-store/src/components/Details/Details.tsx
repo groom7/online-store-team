@@ -12,7 +12,7 @@ function DetailsComponent({loading, setModalActive} : DetailsProps) {
   const [uniqPicture, setUniqPicture] = useState<string[]>([])
   const { setCartProduct, removeCartProduct } = useContext(StoreStateContext);
   let { id } = useParams()
-  const currentId = id !== undefined ? +id : +(window.location.href.split('/')[window.location.href.split('/').length - 1])
+  const currentId = id === undefined ? 0 : +id
  async function getImageSizeInBytes(imgURL: string) {
     const request =  new XMLHttpRequest();
     request.open("HEAD", imgURL, false);
