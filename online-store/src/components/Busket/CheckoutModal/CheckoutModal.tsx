@@ -1,8 +1,176 @@
-import { useState, FocusEvent, ChangeEvent, useEffect } from 'react';
+import { useState, FocusEvent, useEffect } from 'react';
 import './CheckoutModal.scss';
 import { getPaymentSystemIcon } from './getPaymentSystemIcon';
 import { useNavigate } from "react-router-dom";
 import { clearCart } from '../../../controllers/clearCart';
+
+const useValidation = (value: string, validations: { [key: string]: boolean }) => {
+  const [isEmpty, setEmpty] = useState(true);
+  const [fullNameError, setFullNameError] = useState(false);
+  const [phoneNumberError, setPhoneNumberError] = useState(false);
+  const [addressError, setAddressError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [cardNumberError, setCardNumberError] = useState(false);
+  const [validThroughError, setValidThroughError] = useState(false);
+  const [cvvError, setCvvError] = useState(false);
+  const [inputValid, setInputValid] = useState(true);
+  const [formatValue, setFormatValue] = useState('');
+  const [isEmptyErrorText, setIsEmptyErrorText] = useState('');
+  const [errorText, setErrorText] = useState('');
+
+  useEffect(() => {
+    for (const validation in validations) {
+      switch (validation) {
+        case 'isEmpty':
+          if (value !== '') {
+            setEmpty(false);
+            setIsEmptyErrorText('');
+          } else {
+            setEmpty(true);
+            setIsEmptyErrorText('Field cannot be empty');
+          }
+          break;
+        case 'isFullName':
+          const fullNameFormat = /^[\S]{3,}(\s[\S]{3,}){1,}$/;
+
+          if (fullNameFormat.test(value)) {
+            setFullNameError(false);
+            setErrorText('');
+          } else {
+            setFullNameError(true);
+            setErrorText('Incorrect first or last name');
+          }
+          break;
+        case 'isPhoneNumber':
+          const phoneNumberFormat = /^\+\d{9,}$/;
+
+          if (phoneNumberFormat.test(value)) {
+            setPhoneNumberError(false);
+            setErrorText('');
+          } else {
+            setPhoneNumberError(true);
+            setErrorText('Incorrect phone number');
+          }
+          break;
+        case 'isAddress':
+          const addressFormat = /^[\S]{5,}(\s[\S]{5,})(\s[\S]{5,}){1,}$/
+
+          if (addressFormat.test(value)) {
+            setAddressError(false);
+            setErrorText('');
+          } else {
+            setAddressError(true);
+            setErrorText('Incorrect address');
+          }
+          break;
+        case 'isEmail':
+          const emailFormat = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+          if (emailFormat.test(String(value).toLowerCase())) {
+            setEmailError(false);
+            setErrorText('');
+          } else {
+            setEmailError(true);
+            setErrorText('Incorrect email');
+          }
+          break;
+        case 'isCardNumber':
+          const cardNumber = value.replace(/\D/g, '')
+          const cardNumberFormat = /\d{16}$/;
+
+          if (cardNumberFormat.test(cardNumber)) {
+            setCardNumberError(false);
+            setErrorText('');
+          } else {
+            setCardNumberError(true);
+            setErrorText('Incorrect card number');
+          }
+          setFormatValue(cardNumber);
+          break;
+        case 'isValidThrough':
+          let expiryDate = value.replace(/\D/g, '');
+          const dateFormat = /^(0[1-9]|1[0-2])\/(\d{2})*$/;
+          
+          if (expiryDate.length === 4) {
+            expiryDate = expiryDate.replace(/(\d{2})(\d{2})/, '$1/$2');
+          }
+          if (dateFormat.test(expiryDate)) {
+            setValidThroughError(false);
+            setErrorText('');
+          } else {
+            setValidThroughError(true);
+            setErrorText('Incorrect expiry date');
+          }
+          setFormatValue(expiryDate);
+          break;
+        case 'isCVV':
+          const cvv = value.replace(/\D/g, '')
+          const cvvFormat = /\d{3}$/;
+
+          if (cvvFormat.test(cvv)) {
+            setCvvError(false);
+            setErrorText('');
+          } else {
+            setCvvError(true);
+            setErrorText('Incorrect CVV');
+          }
+          setFormatValue(cvv);
+          break;
+      }
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (
+      fullNameError
+      || phoneNumberError
+      || addressError
+      || emailError
+      || cardNumberError
+      || validThroughError
+      || cvvError
+    ) {
+      setInputValid(false);
+    } else {
+      setInputValid(true);
+    }
+  }, [isEmpty, fullNameError, phoneNumberError, addressError, emailError, cardNumberError, validThroughError, cvvError]);
+  
+  return {
+    isEmpty,
+    fullNameError,
+    phoneNumberError,
+    addressError,
+    emailError,
+    cardNumberError,
+    validThroughError,
+    cvvError,
+    inputValid,
+    formatValue,
+    errorText,
+    isEmptyErrorText
+  }
+}
+
+const useInput = (initialValue: string, validations: { [key: string]: boolean }) => {
+  const [value, setValue] = useState(initialValue);
+  const [isDirty, setDirty] = useState(false);
+  const valid = useValidation(value, validations);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
+    setDirty(true);
+  };
+  
+  return {
+    value,
+    onChange,
+    onBlur,
+    isDirty,
+    ...valid
+  }
+};
 
 function CheckoutModal(
   { 
@@ -13,138 +181,14 @@ function CheckoutModal(
     setActive(modalActive: boolean) : void
   }
 ) {
-  const [fullName, setFullName] = useState('');
-  const [fullNameError, setFullNameError] = useState('Field cannot be empty');
-  const [fullNameDirty, setFullNameDirty] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneNumberError, setPhoneNumberError] = useState('Field cannot be empty');
-  const [phoneNumberDirty, setPhoneNumberDirty] = useState(false);
-  const [address, setAddress] = useState('');
-  const [addressError, setAddressError] = useState('Field cannot be empty');
-  const [addressDirty, setAddressDirty] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('Field cannot be empty');
-  const [emailDirty, setEmailDirty] = useState(false);
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardNumberError, setCardNumberError] = useState('Field cannot be empty');
-  const [cardNumberDirty, setCardNumberDirty] = useState(false);
-  const [validThrough, setValidThrough] = useState('');
-  const [validThroughError, setValidThroughError] = useState('Field cannot be empty');
-  const [validThroughDirty, setValidThroughDirty] = useState(false);
-  const [cvv, setCvv] = useState('');
-  const [cvvError, setCvvError] = useState('Field cannot be empty');
-  const [cvvDirty, setCvvDirty] = useState(false);
-  const [formValid, setFormValid] = useState(false);
+  const fullName = useInput('', { isEmpty: true, isFullName: true });
+  const phoneNumber = useInput('', { isEmpty: true, isPhoneNumber: true });
+  const address = useInput('', { isEmpty: true, isAddress: true });
+  const email = useInput('', { isEmpty: true, isEmail: true });
+  const cardNumber = useInput('', { isEmpty: true, isCardNumber: true });
+  const validThrough = useInput('', { isEmpty: true, isValidThrough: true });
+  const cvv = useInput('', { isEmpty: true, isCVV: true });
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const blurHandler = (event: FocusEvent<HTMLInputElement>) => {
-    switch (event.target.name) {
-      case 'full-name':
-        setFullNameDirty(true);
-        break;
-      case 'phone':
-        setPhoneNumberDirty(true);
-        break;
-      case 'address':
-        setAddressDirty(true);
-        break;
-      case 'e-mail':
-        setEmailDirty(true);
-        break;
-      case 'card-number':
-        setCardNumberDirty(true);
-        break;
-      case 'valid through':
-        setValidThroughDirty(true);
-        break;
-      case 'cvv':
-        setCvvDirty(true);
-        break;
-    }
-  };
-const fullNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  const fullName = event.target.value;
-  setFullName(fullName);
-  const fullNameFormat = /^[\S]{3,}(\s[\S]{3,}){1,}$/
-  if (!fullNameFormat.test(fullName)) {
-    setFullNameError('Incorrect first or last name')
-  } else {
-    setFullNameError('')
-  }
-};
-const phoneNumberHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  setPhoneNumber(event.target.value);
-  const reg = /^\+\d{9,}$/;
-  if (!reg.test(event.target.value)) {
-    setPhoneNumberError('Incorrect phone number')
-  } else {
-    setPhoneNumberError('')
-  }
-};
-const addressHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  const address = event.target.value;
-  setAddress(address);
-  const addressFormat = /^[\S]{5,}(\s[\S]{5,})(\s[\S]{5,}){1,}$/
-  if (!addressFormat.test(address)) {
-    setAddressError('Incorrect address')
-  } else {
-    setAddressError('')
-  }
-};
-const emailHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  setEmail(event.target.value);
-  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (!reg.test(String(event.target.value).toLowerCase())) {
-    setEmailError('Incorrect email')
-  } else {
-    setEmailError('')
-  }
-};
-const cardNumberHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  setCardNumber(event.target.value.replace(/\D/g, ''));
-  const reg = /\d{16}$/;
-  if (!reg.test(event.target.value)) {
-    setCardNumberError('Incorrect card number')
-  } else {
-    setCardNumberError('')
-  }
-};
-const validThroughHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  let expiryDate = event.target.value.replace(/\D/g, '');
-  const dateFormat = /^(0[1-9]|1[0-2])\/(\d{2})*$/;
-  if (expiryDate.length === 4) {
-    expiryDate = expiryDate.replace(/(\d{2})(\d{2})/, '$1/$2');
-  }
-  if (!dateFormat.test(expiryDate)) {
-    setValidThroughError('Incorrect expiry date');
-  } else {
-    setValidThroughError('');
-  }
-  setValidThrough(expiryDate);
-};
-const cvvHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  setCvv(event.target.value.replace(/\D/g, ''));
-  const reg = /\d{3}$/;
-  if (!reg.test(event.target.value)) {
-    setCvvError('Incorrect CVV')
-  } else {
-    setCvvError('')
-  }
-};
-let commonError =
-  fullNameError
-  || phoneNumberError
-  || addressError
-  || emailError
-  || cardNumberError
-  || validThroughError
-  || cvvError;
-useEffect(() => {
-  if (commonError) {
-    setFormValid(false);
-  } else {
-    setFormValid(true);
-  }
-}, [commonError]);
 
 const navigate = useNavigate();
 const submitClickHandler = () => {
@@ -171,50 +215,66 @@ return (
               name='full-name'
               className='full-name input'
               type='text'
-              onBlur={ event => blurHandler(event) }
-              value={ fullName }
-              onChange={ (event) => fullNameHandler(event) }
+              onBlur={ (event) => fullName.onBlur(event) }
+              value={ fullName.value }
+              onChange={ (event) => fullName.onChange(event) }
               id='full-name'
             />
-            {(fullNameDirty && fullNameError) && (<span className='field-invalid-text'>{ fullNameError }</span>)}
+            {(fullName.isDirty  && (fullName.isEmpty || fullName.fullNameError)) && (
+              <span className='field-invalid-text'>
+                { fullName.isEmptyErrorText || fullName.errorText }
+              </span>
+            )}
             <label htmlFor='phone'>Phone</label>
             <input
               name='phone'
               className='phone input'
               type='text'
-              onBlur={ event => blurHandler(event) }
-              value={ phoneNumber }
-              onChange={ (event) => phoneNumberHandler(event) }
+              onBlur={ (event) => phoneNumber.onBlur(event) }
+              value={ phoneNumber.value }
+              onChange={ (event) => phoneNumber.onChange(event) }
               id='phone'
             />
-            {(phoneNumberDirty && phoneNumberError) && (<span className='field-invalid-text'>{ phoneNumberError }</span>)}
+            {(phoneNumber.isDirty && (phoneNumber.isEmpty || phoneNumber.phoneNumberError)) && (
+              <span className='field-invalid-text'>
+                { phoneNumber.isEmptyErrorText || phoneNumber.errorText }
+              </span>
+            )}
             <label htmlFor='address'>Address</label>
             <input
               name='address'
               className='address input'
               type='text'
-              onBlur={ event => blurHandler(event) }
-              value={ address }
-              onChange={ (event) => addressHandler(event) }
+              onBlur={ (event) => address.onBlur(event) }
+              value={ address.value }
+              onChange={ (event) => address.onChange(event) }
               id='address'
             />
-            {(addressDirty && addressError) && (<span className='field-invalid-text'>{ addressError }</span>)}
+            {(address.isDirty && (address.isEmpty || address.addressError)) && (
+              <span className='field-invalid-text'>
+                { address.isEmptyErrorText || address.errorText }
+              </span>
+            )}
             <label htmlFor='email'>E-mail</label>
             <input
               name='e-mail'
               className='email input'
               type='email'
-              onBlur={ event => blurHandler(event) }
-              value={ email }
-              onChange={ (event) => emailHandler(event) }
+              onBlur={ (event) => email.onBlur(event) }
+              value={ email.value }
+              onChange={ (event) => email.onChange(event) }
               id='email'
             />
-            {(emailDirty && emailError) && (<span className='field-invalid-text'>{ emailError }</span>)}
+            {(email.isDirty && (email.isEmpty || email.emailError)) && (
+              <span className='field-invalid-text'>
+                { email.isEmptyErrorText || email.errorText }
+              </span>
+            )}
             <div className='payment-details'>
               <div className='payment-details__header'>
                 <h4 className='title'>Payment details:</h4>
                 <img
-                  src={ getPaymentSystemIcon(cardNumber) }
+                  src={ getPaymentSystemIcon(cardNumber.value) }
                   className='payment-system-icon'
                   alt="cart-icon"
                 />
@@ -226,14 +286,18 @@ return (
                   name='card-number'
                   className='card-number input'
                   type='tel'
-                  onBlur={ event => blurHandler(event) }
-                  value={ cardNumber }
-                  onChange={ (event) => cardNumberHandler(event) }
+                  onBlur={ (event) => cardNumber.onBlur(event) }
+                  value={ cardNumber.formatValue }
+                  onChange={ (event) => cardNumber.onChange(event) }
                   id='card-number'
                   maxLength={16}
                 />
                 <span className='payment-system-hint'>4-Visa, 5-MasterCard, 6-Maestro</span>
-                {(cardNumberDirty && cardNumberError) && (<span className='field-invalid-text'>{ cardNumberError }</span>)}
+                {(cardNumber.isDirty && (cardNumber.isEmpty || cardNumber.cardNumberError)) && (
+                  <span className='field-invalid-text'>
+                    { cardNumber.isEmptyErrorText || cardNumber.errorText }
+                  </span>
+                )}
               </div>
               <div className="valid-through-info">
                 <label htmlFor='valid-throgh'>Valid through</label>
@@ -241,14 +305,18 @@ return (
                   name='valid through'
                   className='valid-through input'
                   type='tel'
-                  onBlur={ event => blurHandler(event) }
-                  onChange={ (event) => validThroughHandler(event) }
-                  value={ validThrough }
+                  onBlur={ (event) => validThrough.onBlur(event) }
+                  onChange={ (event) => validThrough.onChange(event) }
+                  value={ validThrough.formatValue }
                   maxLength={5}
                   id='valid-through'
                   placeholder='MMYY'
                 />
-                {(validThroughDirty && validThroughError) && (<span className='field-invalid-text'>{ validThroughError }</span>)}
+                {(validThrough.isDirty && (validThrough.isEmpty || validThrough.validThroughError)) && (
+                  <span className='field-invalid-text'>
+                    { validThrough.isEmptyErrorText || validThrough.errorText }
+                  </span>
+                )}
               </div>
               <div className="cvv-info">
                 <label htmlFor='cvv'>CVV</label>
@@ -256,20 +324,32 @@ return (
                   name='cvv'
                   className='cvv input'
                   type='tel'
-                  onBlur={ event => blurHandler(event) }
-                  onChange={ event => cvvHandler(event) }
-                  value={ cvv }
+                  onBlur={ (event) => cvv.onBlur(event) }
+                  onChange={ (event) => cvv.onChange(event) }
+                  value={ cvv.formatValue }
                   id='cvv'
                   maxLength={3}
                 />
-                {(cvvDirty && cvvError) && (<span className='field-invalid-text'>{ cvvError }</span>)}
+                {(cvv.isDirty && (cvv.isEmpty || cvv.cvvError)) && (
+                  <span className='field-invalid-text'>
+                    { cvv.isEmptyErrorText || cvv.errorText }
+                  </span>
+                )}
               </div>
               </div>
             </div>
             <button
               className='place-order-button button'
               type='submit'
-              disabled={!formValid}
+              disabled={ 
+                !fullName.inputValid
+                || !phoneNumber.inputValid
+                || !address.inputValid
+                || !email.inputValid
+                || !cardNumber.inputValid
+                || !validThrough.inputValid
+                || !cvv.inputValid
+              }
               onClick={ submitClickHandler }
             >place order</button> 
           </>
