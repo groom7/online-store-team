@@ -12,7 +12,7 @@ const useInput = (initialValue: string, validations: { [key: string]: boolean })
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const onBlur = () => {
     setDirty(true);
   };
   
@@ -68,7 +68,7 @@ return (
               name='full-name'
               className='full-name input'
               type='text'
-              onBlur={ (event) => fullName.onBlur(event) }
+              onBlur={ () => fullName.onBlur() }
               value={ fullName.value }
               onChange={ (event) => fullName.onChange(event) }
               id='full-name'
@@ -83,7 +83,7 @@ return (
               name='phone'
               className='phone input'
               type='text'
-              onBlur={ (event) => phoneNumber.onBlur(event) }
+              onBlur={ () => phoneNumber.onBlur() }
               value={ phoneNumber.value }
               onChange={ (event) => phoneNumber.onChange(event) }
               id='phone'
@@ -98,7 +98,7 @@ return (
               name='address'
               className='address input'
               type='text'
-              onBlur={ (event) => address.onBlur(event) }
+              onBlur={ () => address.onBlur() }
               value={ address.value }
               onChange={ (event) => address.onChange(event) }
               id='address'
@@ -113,7 +113,7 @@ return (
               name='e-mail'
               className='email input'
               type='email'
-              onBlur={ (event) => email.onBlur(event) }
+              onBlur={ () => email.onBlur() }
               value={ email.value }
               onChange={ (event) => email.onChange(event) }
               id='email'
@@ -139,7 +139,7 @@ return (
                   name='card-number'
                   className='card-number input'
                   type='tel'
-                  onBlur={ (event) => cardNumber.onBlur(event) }
+                  onBlur={ () => cardNumber.onBlur() }
                   value={ cardNumber.formatValue }
                   onChange={ (event) => cardNumber.onChange(event) }
                   id='card-number'
@@ -158,7 +158,7 @@ return (
                   name='valid through'
                   className='valid-through input'
                   type='tel'
-                  onBlur={ (event) => validThrough.onBlur(event) }
+                  onBlur={ () => validThrough.onBlur() }
                   onChange={ (event) => validThrough.onChange(event) }
                   value={ validThrough.formatValue }
                   maxLength={5}
@@ -177,7 +177,7 @@ return (
                   name='cvv'
                   className='cvv input'
                   type='tel'
-                  onBlur={ (event) => cvv.onBlur(event) }
+                  onBlur={ () => cvv.onBlur() }
                   onChange={ (event) => cvv.onChange(event) }
                   value={ cvv.formatValue }
                   id='cvv'
