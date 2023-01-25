@@ -116,3 +116,9 @@ export interface BusketProps {
   modalActive: boolean,
   setModalActive(modalActive: boolean) : void
 }
+export interface ProductCardProps {
+  productData: Response,
+  groupTotalPrice: number,
+  groupTotalCount: number 
+  listNumber: number,
+}
