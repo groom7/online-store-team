@@ -3,7 +3,7 @@ import './CheckoutModal.scss';
 import { getPaymentSystemIcon } from './getPaymentSystemIcon';
 import { useNavigate } from "react-router-dom";
 import { clearCart } from '../../../controllers/clearCart';
-import useValidation from '../../../hooks/useValidation';
+import useInput from '../../../hooks/useInput';
 
 function CheckoutModal(
   { 
