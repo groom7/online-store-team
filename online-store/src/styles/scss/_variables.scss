@@ -1,0 +1,50 @@
+//fonts sizes
+$font-small: 14px;
+$font-base-size: 16px;
+$font-medium: 20px;
+$font-large: 24px;
+
+//colors
+$color-orange: #ff7004;
+
+//text colors
+$color-minor-text: #474747;
+$color-major-text: #212121;
+
+//bgc colors
+$color-light-gray-bgc: #f4f5f7;
+$color-dark-gray-bgc: #ebebeb;
+
+//bgc colors
+$color-dark-border: #ccc;
+
+//spaces
+$spacer-base: 16px;
+
+$spacer-xxs: 0.25 * $spacer-base;
+$spacer-xs: 0.5 * $spacer-base;
+$spacer-s: 0.75 * $spacer-base;
+$spacer-m: $spacer-base;
+$spacer-l: 1.5 * $spacer-base;
+$spacer-xl: 1.75 * $spacer-base;
+$spacer-xxl: 2 * $spacer-base;
+
+@mixin breakpoint($point) {
+  @if $point == large-desktop {
+      @media (min-width: 1200.9px) {@content;}
+  }
+  @if $point == desktop {
+      @media (max-width: 1200px) {@content;}
+  }
+  @else if $point == small-desktop {
+      @media (max-width: 992px) {@content;}
+  }
+  @else if $point == tablet {
+      @media (max-width: 768px) {@content;}
+  }
+  @else if $point == mobile {
+      @media (max-width: 360px) {@content;}
+  }
+}
+
+

@@ -1,0 +1,83 @@
+@import '../../../styles/scss/variables';
+
+.product-card {
+  min-height: 160px;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 8fr 1fr 1fr;
+  gap: $spacer-s;
+  align-items: center;
+  padding: $spacer-m;
+  border-bottom: 1px solid #ebebeb;
+  @include breakpoint(small-desktop) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.25fr 1fr 1fr 0.25fr 0.25fr;
+  }
+  .list-number {
+    width: 30px;
+    min-width: 20px;
+    text-align: center;
+    border: 1px solid #ebebeb;
+    font-size: $font-small;
+    margin: 0 auto;
+
+  }
+  .product-card__info{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .product-title {
+    font-weight: 500;
+    color: $color-major-text;
+    &:hover {
+      font-weight: 700;
+    }
+  }
+  .product-description,
+  .product-category,
+  .product-rating,
+  .product-discount {
+    font-size: $font-small;
+  }
+  .quantity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .in-stock {
+    min-width: 150px;
+    text-align: center;
+    font-size: $font-small;
+  }
+  .quantity-control {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .decrease-button,
+  .increase-button {
+    width: 18px;
+    height: 18px;
+  }
+  .decrease-button {
+    background: no-repeat center/contain url(../../../assets/images/decrease.png);
+  }
+  .quantity-value {
+    min-width: 70px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .increase-button {
+    background: no-repeat center/contain url(../../../assets/images/increase.png);
+  }
+  .price {
+    min-width: 100px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-orange;
+  }
+}

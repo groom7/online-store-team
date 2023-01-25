@@ -1,0 +1,20 @@
+.empty-cart {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 10px auto;
+  .cart-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 16px;
+  }
+}
+.empty-cart-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+}

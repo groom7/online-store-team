@@ -1,0 +1,107 @@
+@import '../../../styles/scss/variables';
+
+.summary {
+  max-width: 350px;
+  @include breakpoint(large-desktop) {
+    width: 25%;
+  }
+  @include breakpoint(desktop) {
+    width: 95%;
+    margin: 0 $spacer-s;
+  }
+  height: 415px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 $spacer-s;
+  padding: $spacer-s;
+  background-color: #ebebeb;
+}
+.summary__title-wrapper {
+  position: relative;
+  display: flex;
+  font-size: 18px;
+  font-family: 'Raleway', 'sans-serif';
+  font-weight: 700;
+  margin-bottom: 32px;
+  .title {
+    display: inline-block;
+    position: relative;
+    padding-right: 16px;
+    background-color: #ebebeb;
+    z-index: 1;
+  }
+  &::before {
+    background-color: #e3e1e1;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 13px;
+    -webkit-transition: all .4s ease 0s;
+    transition: all .4s ease 0s;
+    width: 100%;
+    z-index: 1;
+  }
+}
+.summary__total-count {
+  font-size: $font-small;
+  margin-bottom: 6px;
+}
+.summary__total-price {
+  font-size: $font-small;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.user-promo-code {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  .user-promo-code__text {
+    font-size: $font-small;
+  }
+  .user-promo-code__delete-button {
+    width: 12px;
+    height: 12px;
+    background: no-repeat center/100% url(../../../assets/images/x.png);
+  }
+}
+.promo {
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+  .promo__code-list {
+    margin-bottom: auto;
+  }
+  .promo-code-invalid-text {
+    color: red;
+    font-size: $font-small;
+  }
+  .promo__test-promo-text {
+    font-size: $font-small;
+  }
+}
+.summary__grand-total {
+  font-size: $font-medium;
+  font-family: 'Raleway', 'sans-serif';
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: $color-orange;
+}
+.summary__checkou-button {
+  width: 100%;
+  font-size: $font-small;
+  font-weight: 600;
+  font-family: 'Open Sans','Sans-serif';
+  color: #fff;
+  padding: 16px;
+  background-color: #ff7004;
+  transition: ease-in 0.3s all;
+  cursor: pointer;
+  &:hover {
+    background-color: #212121;
+  }
+}

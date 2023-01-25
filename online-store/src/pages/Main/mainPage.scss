@@ -1,0 +1,15 @@
+@import '../.././styles/scss/variables';
+
+.main {
+  flex: 1 0 auto;
+  padding: $spacer-xxl 0;
+}
+.main__wrapper {
+  display: flex;
+  @include breakpoint(small-desktop) {
+    flex-direction: column;
+  }
+}
+.block__wrapper {
+  border: 2px solid black;
+}

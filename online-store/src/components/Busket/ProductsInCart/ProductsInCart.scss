@@ -1,0 +1,94 @@
+@import '../../../styles/scss/variables';
+
+.products-list {
+  @include breakpoint(large-desktop) {
+    width: 75%;
+    margin: 0 $spacer-s;
+  }
+  @include breakpoint(desktop) {
+    margin: 0 $spacer-s $spacer-m;
+  }
+  border: 1px solid #ebebeb;
+  .products-list__header {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 20px 16px 20px;
+    border-bottom: 1px solid #ebebeb;
+    @include breakpoint(small-desktop) {
+      gap: $spacer-xs;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .cart-title-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 24px;
+    font-family: 'Raleway', 'sans-serif';
+    font-weight: 600;
+  }
+  .pagination-control {
+    display: flex;
+    flex: 2;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: $spacer-xs;
+    font-size: $font-small;
+    @include breakpoint(small-desktop) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .pages-numbers {
+      display: flex;
+      align-items: flex-end;
+      margin-left: auto;
+      @include breakpoint(small-desktop) {
+        margin: 0 auto;
+      }
+      :first-child {
+        padding-right: 5px;
+      }
+    }
+    .page-number {
+      min-width: 20px;
+      height: 23px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #ebebeb;
+      padding: 0 1px;
+    }
+    .items-per-page {
+      display: flex;
+      gap: 5px;
+      align-items: flex-end;
+    }
+    .items-per-page__input {
+      width: 60px;
+      height: 23px;
+      border: 1px solid #ebebeb;
+      font-size: $font-small;
+      padding: 2px 4px;
+      color: #474747;
+      &:hover {
+        background-color: #fafafa;
+      }
+    }
+  }
+  .cart-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .cart-title {
+    display: flex;
+    color: $color-major-text;
+  }
+  
+  .bold-orange-text {
+    font-weight: 600;
+    color: #ff7004;
+  }
+}
